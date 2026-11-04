@@ -1,0 +1,13 @@
+.section1,.section3,.section2{
+    min-height: 100vh;
+    background-image: url("../media/bluebackground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+.section4 {
+    min-height: 100vh;
+    background-image: url("../media/mountain.jpg");
+    background-size: cover;
+    background-position: center;
+}

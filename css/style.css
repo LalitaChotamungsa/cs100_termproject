@@ -1,13 +1,22 @@
 .section1,.section3,.section2{
     min-height: 100vh;
     background-image: url("../media/bluebackground.jpg");
-    background-size: cover;
+    background-size: 100%;
     background-position: center;
     background-attachment: fixed;
+    animation: zoomBackground 20s ease-in-out infinite alternate;
 }
 .section4 {
     min-height: 100vh;
     background-image: url("../media/mountain.jpg");
     background-size: cover;
     background-position: center;
+}
+@keyframes zoomBackground {
+    from {
+        background-size: 100%;
+    }
+    to {
+        background-size: 120%;
+    }
 }

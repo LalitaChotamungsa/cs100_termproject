@@ -20,7 +20,7 @@
         background-size: 120%;
     }
 }
-<<<<<<< HEAD
+
 .section2 {
 .content {
   display: flex;
@@ -102,7 +102,6 @@
   }
 }
 }
-=======
 
         /* ===== section-1: button + footer text (#6) ===== */
 .hero-create-btn {
@@ -297,5 +296,3 @@ body {
     border-radius: 10px;
     padding-left: 50px;
 }
-
->>>>>>> c69970f1656201dfc3b2f98e57cf5950637242ca

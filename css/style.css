@@ -118,7 +118,7 @@ font-size: 1.25rem;
   padding: 0 1rem;
   text-align: center;
   color: #fff;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.6;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
@@ -294,12 +294,15 @@ body {
     margin: 0;
 }
 .box {
-    background: linear-gradient(to right,#fbfbfb,#fbfbfbac,#00000100);
-    padding: 15px 15px 15px 15px;
+    display: table;
+    width: fit-content;
+    max-width: 90%;
+    background: linear-gradient(to right, #fbfbfb, #fbfbfbac, #00000100);
+    padding: 15px 30px;
     border-radius: 50px;
     text-align: center;
-    margin-left:650px;
-    margin-right: 650px;
+    color: #000;
+    margin: 0 auto;
 }
 .gradient {
     background: linear-gradient(90deg, #e4abe4, #a362a5, #882483);

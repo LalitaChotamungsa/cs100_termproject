@@ -20,3 +20,169 @@
         background-size: 120%;
     }
 }
+
+        /* ===== section-1: button + footer text (#6) ===== */
+.hero-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: #fff;
+  color: #000;
+  border: 0;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s;
+}
+.hero-create-btn:hover,
+.hero-create-btn:focus-visible {
+  background: #f1f3f5;
+  color: #000;
+  transform: translateY(-1px);
+}
+.hero-create-btn .bi { font-size: 1.25rem; }
+
+.hero-footer {
+  max-width: 760px;
+  margin: 1.5rem auto 0;
+  padding: 0 1rem;
+  text-align: center;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 576px) {
+  .hero-footer { font-size: 0.85rem; }
+  .hero-create-btn { width: 100%; justify-content: center; }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between; /* แยก WEB-PORTFOLIO ไว้ซ้าย และเมนูไว้ขวา */
+    align-items: center;            /* จัดให้อยู่กึ่งกลางแนวตั้งเท่ากันเป๊ะ */
+    padding: 15px 35px;
+    background-color: #0f172a;      /* สีพื้นหลังน้ำเงินเข้มตามแบบของคุณ */
+    border-radius: 40px;            /* ทำขอบโค้งมนสวยงามตามรูป */
+    margin: 20px;                   /* เว้นระยะรอบๆ แถบเมนู */
+}
+
+/* คำว่า WEB-PORTFOLIO */
+nav div, nav span {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* จัดการกล่องข้อความกลุ่มเมนู (HOME, PROFILE, ABOUT) */
+nav ul {
+    list-style: none; /* ลบจุดสีดำออกแน่นอน 100% */
+    display: flex;    /* สั่งให้เรียงตัวจากซ้ายไปขวา (แนวนอน) */
+    gap: 35px;        /* เว้นระยะห่างช่องไฟระหว่างคำตามรูปขวา */
+    margin: 0;
+    padding: 0;
+}
+
+/* ตกแต่งตัวอักษรลิงก์เมนูภายใน */
+nav ul li a {
+    color: #ffffff;         /* เปลี่ยนตัวหนังสือเป็นสีขาว */
+    text-decoration: none;  /* ลบเส้นใต้สีน้ำเงินออกทั้งหมด */
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+}
+
+/* เอฟเฟกต์เวลาเอาเมาส์ชี้เมนู */
+nav ul li a:hover {
+    color: rgba(255, 255, 255, 0.7); /* จางลงเล็กน้อยให้ดูโมเดิร์น */
+}
+
+/* --- ตั้งค่าหน้าเว็บเริ่มต้น --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* แนะนำให้ใส่ background-image ของคุณเองตรงนี้เพื่อความสวยงามครับ */
+    background-color: #eef2f7; 
+    min-height: 100vh;
+}
+
+/* --- [NAV] สไตล์แถบเมนูด้านบนตามรูปเป๊ะๆ --- */
+.navbar-container {
+    display: flex;
+    justify-content: space-between; /* แยกซ้าย-ขวาออกจากกัน */
+    align-items: center;            /* จัดให้เนื้อหาอยู่กึ่งกลางแนวตั้งพอดี */
+    background-color: #1a2637;      /* สีน้ำเงินเข้ม/ดำ ตามรูปแบบ */
+    padding: 12px 35px;             /* เพิ่มช่องไฟด้านในแถบเมนู */
+    border-radius: 50px;            /* ทำขอบให้มนโค้งเป็นแคปซูลยาว */
+    margin: 20px auto;              /* เว้นระยะห่างรอบตัวแถบเมนู */
+    max-width: 90%;                 /* บีบความกว้างแถวเมนูไม่ให้ชิดขอบจอเกินไป */
+}
+
+/* ตัวหนังสือฝั่งโลโก้ */
+.logo-text {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+/* กลุ่มเมนูฝั่งขวา */
+.nav-menu {
+    list-style: none;               /* ลบจุดวงกลมสีดำออก */
+    display: flex;                  /* จัดให้เรียงเป็นแนวขนานซ้ายไปขวา */
+    gap: 35px;                      /* เว้นระยะห่างช่องไฟระหว่างคำ */
+    margin: 0;
+    padding: 0;
+}
+
+/* ตัวอักษรลิงก์เมนู */
+.nav-menu li a {
+    color: #ffffff;
+    text-decoration: none;          /* ลบเส้นใต้สีน้ำเงินออก */
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* --- [TEXT] สไตล์ข้อความตรงกลางหน้าเว็บ --- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;            /* จัดข้อความให้อยู่ตรงกลางหน้าจอ */
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;               /* ระยะห่างจากแถบเมนูด้านบน */
+}
+
+/* คำว่า Personal Learning */
+.main-title {
+    font-size: 4.5rem;              /* ขนาดตัวอักษรใหญ่หนาตามรูป */
+    font-weight: bold;
+    color: #000000;                 /* ตัวหนังสือสีดำ */
+    margin: 0 0 15px 0;
+}
+
+/* คำว่า Web-site Portfolio ในกรอบขาว */
+.sub-title {
+    display: inline-block;          /* บีบกรอบสีขาวให้พอดีคำ */
+    background-color: #ffffff;       /* พื้นหลังกล่องสีขาวล้วน */
+    color: #000000;                 /* ตัวหนังสือข้างในสีดำ */
+    padding: 8px 35px;              /* ระยะห่างช่องไฟในกล่องขาว */
+    border-radius: 30px;            /* ขอบกล่องโค้งมนเป็นแคปซูลสวยงาม */
+    font-size: 1.4rem;              /* ขนาดตัวอักษรพอดีตา */
+    margin: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* เงาจางๆ เพิ่มความเนี๊ยบ */
+}
+
+
+.logo {
+    text-align: center; /* สั่งให้ข้อความภายในกล่องอยู่ตรงกลาง */
+    color: #ffffff;     /* ปรับสีตัวอักษรตามต้องการ */
+}
+
+
+

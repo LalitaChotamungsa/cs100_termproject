@@ -1,4 +1,4 @@
-.section1,.section3,.section2{
+body {
     min-height: 100vh;
     background-image: url("../media/bluebackground.jpg");
     background-size: 100%;
@@ -20,24 +20,21 @@
         background-size: 120%;
     }
 }
-
 .section2 {
 .content {
   display: flex;
-   flex-direction: row;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 50px;
   width: 100%;
 }
-
 .card-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
   flex-shrink: 0;
 }
-
 .card {
   display: flex;
   flex-direction: row;
@@ -50,7 +47,6 @@
   background: linear-gradient(90deg, #4e8f2f, #8aac1c);
   color: white;
 }
-
 .number {
   font-size: 40px;
   font-weight: bold;
@@ -58,52 +54,43 @@
   min-width: 70px;
   text-align: center;
 }
-
 .info h3 {
   margin: 0;
   font-size: 16px;
 }
-
 .info p {
   margin: 2px 0 0;
   font-size: 14px;
 }
-
 .image-box {
   width: 420px;
   flex-shrink: 0;
 }
-
 .image-box img {
   display: block;
   width: 100%;
-  height: 250px;
+  height: 280px;
   object-fit: cover;
   border-radius: 16px;
 }
-
 .image-box p {
   margin-top: 16px;
   color: white;
 }
-
-
 @media (max-width: 900px) {
   .content {
     flex-direction: column;
     align-items: center;
     padding: 0 16px;
   }
-
   .card-list,
   .image-box {
     width: 100%;
     max-width: 420px;
+    margin: 120px;
   }
 }
 }
-
-        /* ===== section-1: button + footer text (#6) ===== */
 .hero-create-btn {
   display: inline-flex;
   align-items: center;
@@ -122,159 +109,130 @@
   color: #000;
   transform: translateY(-1px);
 }
-.hero-create-btn .bi { font-size: 1.25rem; }
-
+.hero-create-btn .bi { 
+font-size: 1.25rem; 
+}
 .hero-footer {
   max-width: 760px;
   margin: 1.5rem auto 0;
   padding: 0 1rem;
   text-align: center;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
-
 @media (max-width: 576px) {
   .hero-footer { font-size: 0.85rem; }
   .hero-create-btn { width: 100%; justify-content: center; }
 }
-
 nav {
     display: flex;
-    justify-content: space-between; /* แยก WEB-PORTFOLIO ไว้ซ้าย และเมนูไว้ขวา */
-    align-items: center;            /* จัดให้อยู่กึ่งกลางแนวตั้งเท่ากันเป๊ะ */
+    justify-content: space-between;
+    align-items: center;            
     padding: 15px 35px;
-    background-color: #0f172a;      /* สีพื้นหลังน้ำเงินเข้มตามแบบของคุณ */
-    border-radius: 40px;            /* ทำขอบโค้งมนสวยงามตามรูป */
-    margin: 20px;                   /* เว้นระยะรอบๆ แถบเมนู */
+    background-color: #0f172a;      
+    border-radius: 40px;          
+    margin: 20px;                   
 }
-
-/* คำว่า WEB-PORTFOLIO */
 nav div, nav span {
     color: #ffffff;
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: 1px;
 }
-
-/* จัดการกล่องข้อความกลุ่มเมนู (HOME, PROFILE, ABOUT) */
 nav ul {
-    list-style: none; /* ลบจุดสีดำออกแน่นอน 100% */
-    display: flex;    /* สั่งให้เรียงตัวจากซ้ายไปขวา (แนวนอน) */
-    gap: 35px;        /* เว้นระยะห่างช่องไฟระหว่างคำตามรูปขวา */
+    list-style: none; 
+    display: flex;    
+    gap: 35px;        
     margin: 0;
     padding: 0;
 }
-
-/* ตกแต่งตัวอักษรลิงก์เมนูภายใน */
 nav ul li a {
-    color: #ffffff;         /* เปลี่ยนตัวหนังสือเป็นสีขาว */
-    text-decoration: none;  /* ลบเส้นใต้สีน้ำเงินออกทั้งหมด */
+    color: #ffffff;        
+    text-decoration: none;  
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     transition: 0.2s;
 }
-
-/* เอฟเฟกต์เวลาเอาเมาส์ชี้เมนู */
 nav ul li a:hover {
-    color: rgba(255, 255, 255, 0.7); /* จางลงเล็กน้อยให้ดูโมเดิร์น */
+    color: rgba(255, 255, 255, 0.7); 
 }
-
-/* --- ตั้งค่าหน้าเว็บเริ่มต้น --- */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* แนะนำให้ใส่ background-image ของคุณเองตรงนี้เพื่อความสวยงามครับ */
     background-color: #eef2f7; 
     min-height: 100vh;
 }
-
-/* --- [NAV] สไตล์แถบเมนูด้านบนตามรูปเป๊ะๆ --- */
 .navbar-container {
     display: flex;
-    justify-content: space-between; /* แยกซ้าย-ขวาออกจากกัน */
-    align-items: center;            /* จัดให้เนื้อหาอยู่กึ่งกลางแนวตั้งพอดี */
-    background-color: #1a2637;      /* สีน้ำเงินเข้ม/ดำ ตามรูปแบบ */
-    padding: 12px 35px;             /* เพิ่มช่องไฟด้านในแถบเมนู */
-    border-radius: 50px;            /* ทำขอบให้มนโค้งเป็นแคปซูลยาว */
-    margin: 20px auto;              /* เว้นระยะห่างรอบตัวแถบเมนู */
-    max-width: 90%;                 /* บีบความกว้างแถวเมนูไม่ให้ชิดขอบจอเกินไป */
+    justify-content: space-between; 
+    align-items: center;            
+    background-color: #1a2637;      
+    padding: 12px 35px;             
+    border-radius: 50px;           
+    margin: 20px auto;              
+    max-width: 90%;                 
 }
-
-/* ตัวหนังสือฝั่งโลโก้ */
 .logo-text {
     color: #ffffff;
     font-weight: bold;
     font-size: 1.1rem;
     letter-spacing: 0.5px;
 }
-
-/* กลุ่มเมนูฝั่งขวา */
 .nav-menu {
-    list-style: none;               /* ลบจุดวงกลมสีดำออก */
-    display: flex;                  /* จัดให้เรียงเป็นแนวขนานซ้ายไปขวา */
-    gap: 35px;                      /* เว้นระยะห่างช่องไฟระหว่างคำ */
+    list-style: none;               
+    display: flex;                  
+    gap: 35px;                      
     margin: 0;
     padding: 0;
 }
-
-/* ตัวอักษรลิงก์เมนู */
 .nav-menu li a {
     color: #ffffff;
-    text-decoration: none;          /* ลบเส้นใต้สีน้ำเงินออก */
+    text-decoration: none;          
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.5px;
 }
-
-/* --- [TEXT] สไตล์ข้อความตรงกลางหน้าเว็บ --- */
 .hero-section {
     display: flex;
     flex-direction: column;
-    align-items: center;            /* จัดข้อความให้อยู่ตรงกลางหน้าจอ */
+    align-items: center;            
     justify-content: center;
     text-align: center;
-    margin-top: 80px;               /* ระยะห่างจากแถบเมนูด้านบน */
+    margin-top: 80px;               
 }
-
-/* คำว่า Personal Learning */
 .main-title {
-    font-size: 4.5rem;              /* ขนาดตัวอักษรใหญ่หนาตามรูป */
+    font-size: 4.5rem;             
     font-weight: bold;
-    color: #000000;                 /* ตัวหนังสือสีดำ */
-    margin: 0 0 15px 0;
+    color: #000000;                 
+    margin: 0 0 0 0;
 }
-
-/* คำว่า Web-site Portfolio ในกรอบขาว */
 .sub-title {
-    display: inline-block;          /* บีบกรอบสีขาวให้พอดีคำ */
-    background-color: #ffffff;       /* พื้นหลังกล่องสีขาวล้วน */
-    color: #000000;                 /* ตัวหนังสือข้างในสีดำ */
-    padding: 8px 35px;              /* ระยะห่างช่องไฟในกล่องขาว */
-    border-radius: 30px;            /* ขอบกล่องโค้งมนเป็นแคปซูลสวยงาม */
-    font-size: 1.4rem;              /* ขนาดตัวอักษรพอดีตา */
+    display: inline-block;          
+    background-color: #ffffff;       
+    color: #000000;                 
+    padding: 8px 35px;              
+    border-radius: 30px;            
+    font-size: 1.4rem;              
     margin: 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* เงาจางๆ เพิ่มความเนี๊ยบ */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
 }
-
-
 .logo {
-    text-align: center; /* สั่งให้ข้อความภายในกล่องอยู่ตรงกลาง */
-    color: #ffffff;     /* ปรับสีตัวอักษรตามต้องการ */
+    text-align: center; 
+    color: #ffffff;    
 }
-
-/* ล้างค่าเริ่มต้น และบังคับให้หัวข้อใหญ่ขยับมาอยู่ตรงกลางหน้าจอ 100% */
 .main-title, h1 {
-    display: block !important;
-    text-align: center !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    display: block ;
+    text-align: center ;
+    width: 100% ;
+    margin-left: auto ;
+    margin-right: auto;
+    font-size: 90px;
+    padding-top: 70px;
 }
-
 .section3 {
     min-height: 100vh;
     display: flex;
@@ -283,33 +241,16 @@ body {
     padding: 30px 60px;
     position: relative;
 }
-
 .section3 a {
     position: absolute;
     top: 30px;
     left: 60px;
     text-decoration: none;
 }
-
 .section3 img {
     width: 300px;
     border-radius: 10px;
     padding-left: 50px;
-}
-
-/* ===== section-2: header + title text (#3) ===== /
-.howto {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  background-color: #1f2a33; / สีสำรองถ้ารูปยังไม่มา /
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)),
-    url("../media/background-2.jpg"); / เปลี่ยนให้ตรงกับชื่อไฟล์จริง */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .howto-inner {
   flex: 1;
@@ -318,30 +259,57 @@ body {
   padding-top: 2rem;
   padding-bottom: 3rem;
 }
-
-.howto-header { margin-bottom: 2rem; }
+.howto-header { 
+  margin-bottom: 1rem;
+  padding-top: 150px;
+ }
 .howto-brand {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #fff;
   text-decoration: none;
   letter-spacing: 0.02em;
 }
 .howto-brand:hover,
-.howto-brand:focus-visible { color: #fff; opacity: 0.85; }
-.howto-brand .bi { font-size: 1.5rem; }
-
+.howto-brand:focus-visible { 
+  color: #fff; opacity: 0.85; 
+}
+.howto-brand .bi { 
+  font-size: 1.5rem; 
+}
 .howto-title {
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 500;
   line-height: 1.15;
-  margin: 0 0 2rem;
+  margin: 0 5rem 6rem;
 }
-
 .howto-body { flex: 1; }
-
 @media (max-width: 576px) {
   .howto-inner { padding-top: 1.5rem; }
   .howto-header { margin-bottom: 1.25rem; }
+}
+.footer1 {
+    background-color:#ffffff;
+    width: 100%;
+    margin: 0;
+}
+.box {
+    background: linear-gradient(to right,#fbfbfb,#fbfbfbac,#00000100);
+    padding: 15px 15px 15px 15px;
+    border-radius: 50px;
+    text-align: center;
+    margin-left:650px;
+    margin-right: 650px;
+}
+.gradient {
+    background: linear-gradient(90deg, #e4abe4, #a362a5, #882483);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientflow 2s linear infinite alternate;
+}
+@keyframes gradientflow {
+    to {
+        background-position: 100% 0;
+    }
 }

@@ -184,5 +184,14 @@ body {
     color: #ffffff;     /* ปรับสีตัวอักษรตามต้องการ */
 }
 
+/* ล้างค่าเริ่มต้น และบังคับให้หัวข้อใหญ่ขยับมาอยู่ตรงกลางหน้าจอ 100% */
+.main-title, h1 {
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
 
 

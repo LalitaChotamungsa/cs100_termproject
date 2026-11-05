@@ -296,3 +296,52 @@ body {
     border-radius: 10px;
     padding-left: 50px;
 }
+
+/* ===== section-2: header + title text (#3) ===== /
+.howto {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background-color: #1f2a33; / สีสำรองถ้ารูปยังไม่มา /
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)),
+    url("../media/background-2.jpg"); / เปลี่ยนให้ตรงกับชื่อไฟล์จริง */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.howto-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.howto-header { margin-bottom: 2rem; }
+.howto-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.howto-brand:hover,
+.howto-brand:focus-visible { color: #fff; opacity: 0.85; }
+.howto-brand .bi { font-size: 1.5rem; }
+
+.howto-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0 0 2rem;
+}
+
+.howto-body { flex: 1; }
+
+@media (max-width: 576px) {
+  .howto-inner { padding-top: 1.5rem; }
+  .howto-header { margin-bottom: 1.25rem; }
+}

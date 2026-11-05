@@ -193,5 +193,25 @@ body {
     margin-right: auto !important;
 }
 
+.section3 {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 30px 60px;
+    position: relative;
+}
 
+.section3 a {
+    position: absolute;
+    top: 30px;
+    left: 60px;
+    text-decoration: none;
+}
+
+.section3 img {
+    width: 300px;
+    border-radius: 10px;
+    padding-left: 50px;
+}
 

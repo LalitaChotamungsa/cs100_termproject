@@ -44,7 +44,7 @@ body {
   gap: 20px;
   padding: 12px 20px;
   border-radius: 12px;
-  background: linear-gradient(90deg, #4e8f2f, #8aac1c);
+  background: linear-gradient(90deg, #7a9445, #ece69d);
   color: white;
 }
 .number {
@@ -298,8 +298,8 @@ body {
     padding: 15px 15px 15px 15px;
     border-radius: 50px;
     text-align: center;
-    margin-left:650px;
-    margin-right: 650px;
+    margin-left:600px;
+    margin-right: 600px;
 }
 .gradient {
     background: linear-gradient(90deg, #e4abe4, #a362a5, #882483);

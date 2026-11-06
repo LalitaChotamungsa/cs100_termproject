@@ -38,9 +38,6 @@ body {
         animation: none;
     }
 
-    .section1 nav {
-        margin: 0 20px 20px;
-    }
 
     .section1 .main-title {
         padding-top: 30px;
@@ -692,5 +689,44 @@ body {
 
     .navbar-inner .nav-item {
         font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /* ปรับเฉพาะเนื้อหา Hero ไม่แตะ Navbar */
+    .section1 > .main-title {
+        font-size: 38px;
+        line-height: 1.2;
+        padding-top: 55px;
+        margin: 0;
+    }
+
+    .section1 > .box {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin: 15px auto 0;
+    }
+
+    .section1 > br {
+        display: none;
+    }
+
+    .section1 > .hero-actions {
+        margin-top: 200px;
+    }
+
+    .section1 .hero-create-btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    .section1 > .hero-footer {
+        max-width: 350px;
+        margin: 20px auto 0;
+        padding: 0 10px;
+        font-size: 13px;
+        line-height: 1.7;
     }
 }

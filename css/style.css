@@ -360,7 +360,6 @@ body {
 .form-page {
     background: #eef4fb;
     color: #26384d;
-    font-family: Arial, sans-serif;
     margin: 0;
 }
 
@@ -637,5 +636,61 @@ body {
 
     .item-card {
         padding: 15px;
+    }
+}
+
+.navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 35px;
+    background-color: #0f172a;
+    border-radius: 40px;
+    margin: 20px;
+}
+
+.navbar-inner .logo-text {
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.navbar-inner .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-inner .nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+}
+
+.navbar-inner .nav-item:hover {
+    color: #a8c9ed;
+}
+
+@media (max-width: 576px) {
+    .navbar-inner {
+        margin: 12px;
+        padding: 15px 18px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .navbar-inner .nav-menu {
+        gap: 15px;
+    }
+
+    .navbar-inner .nav-item {
+        font-size: 0.8rem;
     }
 }

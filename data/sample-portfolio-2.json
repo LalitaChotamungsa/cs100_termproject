@@ -1,0 +1,45 @@
+{
+  "id": "portfolio-002",
+  "displayName": "Tamemee Sanubnan",
+  "enjoy": "ชอบ Web Development, UI/UX Design, การเขียนโปรแกรมแก้ปัญหา และการสำรวจดีไซน์เว็บไซต์ที่สร้างสรรค์",
+  "tried": "เคยทำเว็บ Learning Portfolio ด้วย HTML/CSS, Rating Component ด้วย Bootstrap และเว็บหน้าโปรไฟล์รวมลิงก์ (Openlink)",
+  "curious": "อยากเรียนรู้ JavaScript, Back-End Development (API และฐานข้อมูล) และ Internet of Things (IoT)",
+  "items": [
+    {
+      "id": "item-001",
+      "title": "Assignment 1: My First Learning Portfolio",
+      "type": "Course Assignment",
+      "date": "2026-08-30",
+      "role": "Individual Developer",
+      "description": "พัฒนาเว็บไซต์ Learning Portfolio หน้าเดียวด้วย HTML และ CSS",
+      "skills": ["HTML", "CSS", "Semantic HTML"],
+      "reflection": {
+        "whatIDid": "พัฒนาเว็บไซต์ Learning Portfolio หน้าเดียวด้วย HTML และ CSS",
+        "whatILearned": "เข้าใจพื้นฐานการกำหนดแต่ละ section มากขึ้น",
+        "challenge": "วางโครงสร้างไม่ดี กำหนดชื่อคลาสซ้ำ และลืมการใช้ CSS Property บางส่วน ต้องแก้ไขตรวจสอบทีละจุดโดยครอบด้วยกรอบเพื่อดูแต่ละเนื้อหา",
+        "nextStep": "ทำให้เว็บสวยขึ้นและโครงสร้างเป็นระเบียบมากกว่านี้"
+      },
+      "evidence": [
+        "https://github.com/meesandev/A1-PorjectCS_100"
+      ]
+    },
+    {
+      "id": "item-002",
+      "title": "Rating Component",
+      "type": "Other",
+      "date": "2026-09-28",
+      "role": "Individual Developer",
+      "description": "แบบฝึกหัดย่อยสร้าง Rating Component (Project card) ด้วย HTML, CSS และ Bootstrap",
+      "skills": ["HTML", "CSS", "Semantic HTML", "Bootstrap"],
+      "reflection": {
+        "whatIDid": "สร้าง Rating Component แบบ Project card ด้วย Bootstrap",
+        "whatILearned": "ได้เรียนรู้การใช้ column และ row ของ Bootstrap",
+        "challenge": "ยังไม่คุ้นชินกับ Bootstrap จึงต้องเปิด example ประกอบการเขียน",
+        "nextStep": "ฝึกใช้ Bootstrap ให้คล่องขึ้นจนเขียนได้โดยไม่ต้องเปิด example"
+      },
+      "evidence": [
+        "https://github.com/meesandev/cs100-ratingCompo"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Portfolio | Power Up!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+<body class="form-page">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="./index.html">POWER UP!</a>
+            <div class="d-flex gap-2">
+                <a href="./index.html" class="btn btn-outline-secondary btn-sm">Home</a>
+                <a href="./profile.html" class="btn btn-primary btn-sm">View Portfolios</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4 py-md-5">
+        <div class="page-heading mb-4">
+            <h1 class="h2 fw-bold">Create Your Portfolio</h1>
+            <p class="text-secondary mb-0">Create your learning profile and add your experiences.</p>
+        </div>
+
+        <section class="form-section mb-4">
+            <h2 class="h4">1. Create Portfolio</h2>
+            <p class="text-secondary small">กรอกข้อมูลพื้นฐานของเจ้าของ Portfolio ก่อนเพิ่มผลงาน</p>
+            <form id="portfolio-form" novalidate>
+                <div class="mb-3">
+                    <label for="displayName" class="form-label">Display Name</label>
+                    <input type="text" class="form-control" id="displayName" name="displayName" required maxlength="80" placeholder="Your name or nickname">
+                    <div class="invalid-feedback">Please enter a display name.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="enjoy" class="form-label">What I Enjoy</label>
+                    <textarea class="form-control" id="enjoy" name="enjoy" rows="2" required placeholder="What do you enjoy doing?"></textarea>
+                    <div class="invalid-feedback">Please tell us what you enjoy.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="tried" class="form-label">What I've Tried</label>
+                    <textarea class="form-control" id="tried" name="tried" rows="2" required placeholder="What have you tried learning or doing?"></textarea>
+                    <div class="invalid-feedback">Please tell us what you have tried.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="curious" class="form-label">What I'm Curious About</label>
+                    <textarea class="form-control" id="curious" name="curious" rows="2" required placeholder="What would you like to learn more about?"></textarea>
+                    <div class="invalid-feedback">Please tell us what you are curious about.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Portfolio</button>
+                <span id="portfolio-message" class="form-message ms-2" role="status"></span>
+            </form>
+        </section>
+
+        <section class="form-section">
+            <h2 class="h4">2. Add Portfolio Item</h2>
+            <p class="text-secondary small">เลือก Portfolio แล้วกรอกข้อมูลผลงานหรือกิจกรรม</p>
+
+            <div class="mb-3">
+                <label for="portfolio-select" class="form-label">Select Portfolio</label>
+                <select id="portfolio-select" class="form-select">
+                    <option value="">-- Create a portfolio first --</option>
+                </select>
+            </div>
+
+            <form id="item-form" novalidate>
+                <fieldset id="item-fields" disabled>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-7">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                            <div class="invalid-feedback">Please enter a title.</div>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">Choose type</option>
+                                <option>Course Assignment</option>
+                                <option>Personal Project</option>
+                                <option>Workshop</option>
+                                <option>Competition</option>
+                                <option>Volunteer</option>
+                                <option>Other</option>
+                            </select>
+                            <div class="invalid-feedback">Please select a type.</div>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                            <div class="invalid-feedback">Please select a valid date.</div>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <label for="role" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="role" name="role" required placeholder="e.g. Developer, Designer">
+                            <div class="invalid-feedback">Please enter your role.</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                            <div class="invalid-feedback">Please describe what you did.</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="form-label d-block">Skills</label>
+                        <div class="skills-list">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="HTML" id="skill-html"><label class="form-check-label" for="skill-html">HTML</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="CSS" id="skill-css"><label class="form-check-label" for="skill-css">CSS</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="JavaScript" id="skill-js"><label class="form-check-label" for="skill-js">JavaScript</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="Bootstrap" id="skill-bootstrap"><label class="form-check-label" for="skill-bootstrap">Bootstrap</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="React" id="skill-react"><label class="form-check-label" for="skill-react">React</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" name="skills" value="Communication" id="skill-communication"><label class="form-check-label" for="skill-communication">Communication</label></div>
+                        </div>
+                        <div id="skills-error" class="text-danger small mt-1" aria-live="polite"></div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="h5">Reflection</h3>
+                        <div class="mb-3">
+                            <label for="whatIDid" class="form-label">What I did</label>
+                            <textarea class="form-control" id="whatIDid" name="whatIDid" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please complete this reflection.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="whatILearned" class="form-label">What I learned</label>
+                            <textarea class="form-control" id="whatILearned" name="whatILearned" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please complete this reflection.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="challenge" class="form-label">Challenge</label>
+                            <textarea class="form-control" id="challenge" name="challenge" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please complete this reflection.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nextStep" class="form-label">Next step</label>
+                            <textarea class="form-control" id="nextStep" name="nextStep" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please complete this reflection.</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="evidence" class="form-label">Evidence URL</label>
+                        <input type="url" class="form-control" id="evidence" name="evidence" required placeholder="https://example.com/my-work">
+                        <div class="form-text">ใส่ URL อย่างน้อย 1 ลิงก์ โดยต้องขึ้นต้นด้วย http:// หรือ https://</div>
+                        <div class="invalid-feedback">Please enter a valid URL starting with http:// or https://.</div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Save Portfolio Item</button>
+                        <a href="./profile.html" class="btn btn-outline-secondary">View Portfolio</a>
+                    </div>
+                </fieldset>
+                <div id="item-message" class="form-message mt-3" role="status"></div>
+            </form>
+        </section>
+    </main>
+    <footer class="py-4 text-center text-secondary small">CS100 | POWER UP! Personal Learning Portfolio</footer>
+</body>
+</html>

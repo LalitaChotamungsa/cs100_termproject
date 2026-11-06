@@ -509,6 +509,21 @@ body {
     background-position: center;
     background-attachment: fixed;
 }
+.profile-page .navbar {
+    background-color: #0f172a;
+    border-radius: 40px;
+    margin: 20px;
+    padding: 15px 35px;
+}
+
+.profile-page .navbar-brand {
+    color: white;
+}
+
+.profile-page .navbar .btn-outline-secondary {
+    color: white;
+    border-color: white;
+}
 
 .profile-page #portfolio-list {
     display: grid;

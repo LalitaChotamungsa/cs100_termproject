@@ -193,7 +193,7 @@ function setupFormPage() {
     refreshPortfolioSelect();
 }
 
-/* ---------- PROFILE PAGE ---------- */
+/*PROFILE PAGE  */
 function createTextElement(tagName, className, text) {
     const element = document.createElement(tagName);
     if (className) element.className = className;
@@ -209,13 +209,10 @@ function renderProfilePage() {
     list.replaceChildren();
 
     if (portfolios.length === 0) {
-        const empty = createTextElement("div", "empty-state", "No portfolios yet. Create your first portfolio to get started.");
-        const link = createTextElement("a", "btn btn-primary mt-3", "Create Portfolio");
-        link.href = "./form.html";
-        empty.append(link);
-        list.append(empty);
-        return;
-    }
+    const empty = createTextElement("div", "empty-state", "No portfolios yet. Create your first portfolio to get started.");
+    list.append(empty);
+    return;
+}
 
     portfolios.forEach((portfolio) => {
         const card = createTextElement("section", "profile-card mb-4");

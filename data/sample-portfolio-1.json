@@ -1,0 +1,45 @@
+{
+  "id": "portfolio-001",
+  "displayName": "จิรภาส เขียวเจริญ",
+  "enjoy": "ชอบรถและนาฬิกา ชอบสร้างเว็บไซต์และลองเขียนโค้ดเพื่อทำสิ่งที่ตัวเองสนใจ",
+  "tried": "เคยสร้างเว็บไซต์ Learning Portfolio หน้าเดียวด้วย HTML และ CSS และทำแบบฝึกหัดหน้าโปรไฟล์ด้วย CSS (Margin, Border, ID Selector)",
+  "curious": "อยากทำ animation และลูกเล่นให้หน้าเว็บขยับได้ เหมือนเว็บไซต์ของ Apple",
+  "items": [
+    {
+      "id": "item-001",
+      "title": "CS100 A1: My First Learning Portfolio",
+      "type": "Course Assignment",
+      "date": "2026-08-30",
+      "role": "Individual Developer",
+      "description": "สร้างเว็บไซต์ Learning Portfolio หน้าเดียวด้วย HTML และ CSS แสดงข้อมูล 5 เกมคอมพิวเตอร์ที่สร้างรายได้สูงสุดในปี 2025 ศึกษา Semantic tag และการตกแต่งด้วย CSS เพิ่มเติม",
+      "skills": ["HTML", "CSS", "Semantic HTML"],
+      "reflection": {
+        "whatIDid": "ได้ลองสร้าง webpage แบบหน้าเดียวด้วย HTML และ CSS",
+        "whatILearned": "เข้าใจโครงสร้างของ HTML และการจัดรูปแบบด้วย CSS มากขึ้น และคุ้นเคยกับเครื่องมือและคำสั่งต่าง ๆ",
+        "challenge": "ลืมว่าบางคำสั่งทำงานยังไง ทำให้ผลลัพธ์ไม่ตรงที่ต้องการ แก้โดยกลับไปทบทวนและค้นข้อมูลเพิ่ม",
+        "nextStep": "อยากพัฒนา animation หรือลูกเล่นของหน้าเว็บให้มีการขยับ เหมือนเว็บไซต์ของ Apple"
+      },
+      "evidence": [
+        "https://github.com/Good50357/A1project_Portfolio"
+      ]
+    },
+    {
+      "id": "item-002",
+      "title": "John Profile: HTML/CSS Practice Exercise",
+      "type": "Personal Project",
+      "date": "2026-08-10",
+      "role": "Individual Learner",
+      "description": "แบบฝึกหัดสร้างหน้าโปรไฟล์หน้าเดียวด้วย HTML และ CSS มีรูปภาพ หัวข้อ ข้อมูลส่วนตัวจำลอง และปุ่ม Download CV",
+      "skills": ["HTML", "CSS", "ID Selector", "Margin", "Border"],
+      "reflection": {
+        "whatIDid": "สร้าง webpage ตามที่โจทย์ต้องการ",
+        "whatILearned": "Margin, Padding, Border, width-height",
+        "challenge": "ข้อความไม่จัดเรียงตามแบบโจทย์",
+        "nextStep": "ฝึกฝนพัฒนาให้คุ้นชินกับ CSS มากกว่าเดิม"
+      },
+      "evidence": [
+        "https://github.com/Good50357/A2_6909650357"
+      ]
+    }
+  ]
+}

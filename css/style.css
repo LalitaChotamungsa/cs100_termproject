@@ -6,6 +6,47 @@ body {
     background-attachment: fixed;
     animation: zoomBackground 20s ease-in-out infinite alternate;
 }
+@media (max-width: 576px) {
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    body {
+        background-image: none;
+        background-color: #eef2f7;
+        animation: none;
+    }
+
+    .section1 {
+        display: flow-root;
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100svh;
+
+        margin: 0;
+        padding: 0;
+
+        background-image: url("../media/bluebackground.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+
+        animation: none;
+    }
+
+    .section1 nav {
+        margin: 0 20px 20px;
+    }
+
+    .section1 .main-title {
+        padding-top: 30px;
+        font-size: 45px;
+    }
+}
 .section4 {
     min-height: 100vh;
     background-image: url("../media/mountain.jpg");
@@ -118,7 +159,7 @@ font-size: 1.25rem;
   padding: 0 1rem;
   text-align: center;
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
@@ -298,7 +339,7 @@ body {
     width: fit-content;
     max-width: 90%;
     background: linear-gradient(to right, #fbfbfb, #fbfbfbac, #00000100);
-    padding: 15px 30px;
+    padding: 15px 20px;
     border-radius: 50px;
     text-align: center;
     color: #000;
@@ -314,5 +355,276 @@ body {
 @keyframes gradientflow {
     to {
         background-position: 100% 0;
+    }
+}
+
+
+
+.form-page {
+    background: #f5f6f1;
+    color: #25312d;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+
+.form-page .navbar {
+    background: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+.form-page main {
+    max-width: 900px;
+}
+
+
+.page-heading {
+    margin-bottom: 30px;
+}
+
+.page-heading h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #263d32;
+}
+
+.page-heading p {
+    color: #777;
+    font-size: 15px;
+}
+
+
+.form-section {
+    background: white;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 16px;
+    border: 1px solid #e5e9e5;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.form-section h2 {
+    color: #304d3e;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+
+.form-page .form-label {
+    font-weight: 600;
+    color: #35483d;
+    margin-bottom: 8px;
+}
+
+
+.form-page .form-control,
+.form-page .form-select {
+    border: 1px solid #d9e0da;
+    border-radius: 9px;
+    padding: 11px 14px;
+    background-color: #fff;
+    transition: 0.2s;
+}
+
+
+.form-page .form-control:focus,
+.form-page .form-select:focus {
+    border-color: #789b83;
+    box-shadow: 0 0 0 3px rgba(120, 155, 131, 0.15);
+}
+
+.form-page textarea {
+    resize: vertical;
+}
+
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 25px;
+    padding: 15px;
+    background: #f7f9f7;
+    border-radius: 10px;
+}
+
+.skills-list .form-check-label {
+    cursor: pointer;
+}
+
+
+.form-page .btn-primary {
+    background: #547b63;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 20px;
+    transition: 0.2s;
+}
+
+.form-page .btn-primary:hover {
+    background: #3d624c;
+    transform: translateY(-2px);
+}
+
+.form-page .btn-outline-secondary {
+    border-radius: 9px;
+    padding: 9px 18px;
+}
+
+.form-page .invalid-feedback {
+    font-size: 13px;
+}
+
+.form-page footer {
+    color: #888;
+}
+
+
+@media (max-width: 576px) {
+
+    .form-page main {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .form-section {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+    .skills-list {
+        gap: 10px 15px;
+    }
+
+    .form-page .btn {
+        font-size: 14px;
+    }
+}
+
+.profile-page {
+    min-height: 100vh;
+    background-image: url("../media/bluebackground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.profile-page #portfolio-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.profile-page #portfolio-list .card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #25312d;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s;
+}
+
+.profile-page #portfolio-list .card:hover {
+    transform: translateY(-5px);
+}
+
+.profile-page #portfolio-list h2,
+.profile-page #portfolio-list h3,
+.profile-page #portfolio-list h4 {
+    color: #263d32;
+    font-weight: 700;
+}
+
+.profile-page {
+    min-height: 100vh;
+    background-image: url("../media/bluebackground.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.profile-card {
+    background: rgba(255, 255, 255, 0.96);
+    padding: 28px;
+    margin-bottom: 28px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.profile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-intro {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.profile-intro > div {
+    background: #f3f6f4;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.item-card {
+    background: #f8faf9;
+    border: 1px solid #e1e8e3;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.skill-badge {
+    background: #dcebe2;
+    color: #28543c;
+    padding: 7px 12px;
+}
+
+.reflection-box {
+    background: #edf3f0;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.evidence-link {
+    overflow-wrap: anywhere;
+}
+.empty-state {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+}
+@media (max-width: 576px) {
+    .profile-page {
+        background-attachment: scroll;
+    }
+
+    .profile-card {
+        padding: 18px;
+    }
+
+    .profile-intro {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .item-card {
+        padding: 15px;
     }
 }

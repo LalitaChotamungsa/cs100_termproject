@@ -1160,3 +1160,16 @@ p {
     flex-shrink: 0;
 }
 
+.quiz-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+}
+.quiz-buttons button {
+    position: relative;
+    z-index: 11;
+    pointer-events: auto;
+    cursor: pointer;
+}

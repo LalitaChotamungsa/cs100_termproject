@@ -740,16 +740,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     getElement("nextBtn")?.addEventListener("click", () => {
-        const question = questionOrder[currentQuestion];
-
-        if (!question || !answers[question.id]) return;
-
-        if (currentQuestion < questionOrder.length - 1) {
-            currentQuestion++;
-            renderQuestion();
-        } else {
-            calculateResult();
-        }
+    console.log("Next button clicked");
+    const question = questionOrder[currentQuestion];
+    if (!question || !answers[question.id]) return;
+    if (currentQuestion < questionOrder.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+    } else {
+        calculateResult();
+    }
     });
 
     getElement("backBtn")?.addEventListener("click", () => {

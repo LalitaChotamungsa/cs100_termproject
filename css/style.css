@@ -693,57 +693,62 @@ body {
 
 .navbar-inner {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 35px;
+    width: calc(100% - 40px);
+    margin: 20px auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
     background-color: #31487A;
     border-radius: 20px;
-    margin: 20px;
 }
-
 .navbar-inner .logo-text {
     color: white;
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
-
 .navbar-inner .nav-menu {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 35px;
+    gap: 25px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
+.navbar-inner .nav-menu li {
+    flex-shrink: 0;
+}
 .navbar-inner .nav-item {
     color: white;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: 0.2s;
+    white-space: nowrap;
 }
-
-.navbar-inner .nav-item:hover {
-    color: #a8c9ed;
-}
-
 @media (max-width: 576px) {
     .navbar-inner {
-        margin: 12px;
-        padding: 15px 18px;
-        flex-wrap: wrap;
-        gap: 15px;
+        width: calc(100% - 24px);
+        margin: 12px auto;
+        padding: 12px;
+        gap: 8px;
     }
-
+    .navbar-inner .logo-text {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
     .navbar-inner .nav-menu {
-        gap: 15px;
+        gap: 9px;
     }
-
     .navbar-inner .nav-item {
-        font-size: 0.8rem;
+        font-size: 10px;
+        letter-spacing: 0;
     }
 }
 
@@ -1147,3 +1152,11 @@ p {
     background-color: #253963;
     color: #fff;
 }
+.question-number {
+    display: inline-block;
+    white-space: nowrap;
+    width: max-content;
+    min-width: max-content;
+    flex-shrink: 0;
+}
+

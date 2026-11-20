@@ -969,6 +969,7 @@ if (importJsonBtn && importJsonInput) {
     });
 
     importJsonInput.addEventListener("change", (event) => {
+        console.log("IMPORT CHANGE WORKING");
         const file = event.target.files[0];
         if (!file) return;
 
@@ -1068,6 +1069,8 @@ if (importJsonBtn && importJsonInput) {
                     importJsonInput.value = "";
                 });
 
+                
+
                 importBtn.addEventListener("click", async () => {
     const selectedIndex = Number(select.value);
     const selectedPortfolio = portfolios[selectedIndex];
@@ -1129,6 +1132,7 @@ if (importJsonBtn && importJsonInput) {
                 importJsonInput.value = "";
             }
         };
+        reader.readAsText(file);
     });
 }
 

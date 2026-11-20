@@ -1,17 +1,51 @@
 
+
 const STORAGE_KEY = "powerUpPortfolios";
+const API_URL = "./api/portfolios.php";
+let portfoliosCache = [];
 
 function getPortfolios() {
-    try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch (error) {
-        console.error("Could not read saved portfolios:", error);
-        return [];
-    }
+    return portfoliosCache;
 }
 
-function savePortfolios(portfolios) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolios));
+async function loadPortfolios() {
+    const response = await fetch(API_URL, { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error("Could not load portfolios from server");
+    }
+
+    const serverPortfolios = await response.json();
+
+    if (serverPortfolios.length === 0) {
+        try {
+            const oldPortfolios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            if (oldPortfolios.length > 0) {
+                await savePortfolios(oldPortfolios);
+                return portfoliosCache;
+            }
+        } catch (error) {
+            console.error("Could not migrate old portfolios:", error);
+        }
+    }
+
+    portfoliosCache = serverPortfolios;
+    return portfoliosCache;
+}
+
+async function savePortfolios(portfolios) {
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(portfolios)
+    });
+
+    if (!response.ok) {
+        throw new Error("Could not save portfolios to server");
+    }
+
+    portfoliosCache = portfolios;
 }
 
 function makeId(prefix) {
@@ -82,7 +116,7 @@ function setupFormPage() {
         showMessage("item-message", "");
     });
 
-    portfolioForm.addEventListener("submit", (event) => {
+    portfolioForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         if (!portfolioForm.checkValidity()) {
             portfolioForm.classList.add("was-validated");
@@ -104,18 +138,18 @@ function setupFormPage() {
         portfolios.push(portfolio);
 
         try {
-            savePortfolios(portfolios);
-            portfolioForm.reset();
-            portfolioForm.classList.remove("was-validated");
-            refreshPortfolioSelect(portfolio.id);
-            showMessage("portfolio-message", "Portfolio created and saved!");
-        } catch (error) {
-            console.error(error);
-            showMessage("portfolio-message", "Could not save. Please check browser storage.", true);
-        }
+    await savePortfolios(portfolios);
+    portfolioForm.reset();
+    portfolioForm.classList.remove("was-validated");
+    refreshPortfolioSelect(portfolio.id);
+    showMessage("portfolio-message", "Portfolio created and saved!");
+} catch (error) {
+    console.error(error);
+    showMessage("portfolio-message", "Could not save to server. Please try again.", true);
+}
     });
 
-    itemForm.addEventListener("submit", (event) => {
+    itemForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         if (!portfolioSelect.value) {
@@ -178,7 +212,7 @@ function setupFormPage() {
         selectedPortfolio.items.push(item);
 
         try {
-            savePortfolios(portfolios);
+            await savePortfolios(portfolios);
             itemForm.reset();
             itemForm.classList.remove("was-validated");
             skillsError.textContent = "";
@@ -186,7 +220,7 @@ function setupFormPage() {
             refreshPortfolioSelect(selectedPortfolio.id);
         } catch (error) {
             console.error(error);
-            showMessage("item-message", "Could not save. Please check browser storage.", true);
+            showMessage("item-message", "Could not save to server. Please try again.", true);
         }
     });
 
@@ -345,7 +379,7 @@ function renderProfilePage() {
                     editor.append(saveBtn, cancelBtn);
                     editBtn.replaceWith(editor);
 
-                    saveBtn.addEventListener("click", () => {
+                    saveBtn.addEventListener("click", async () => {
                         item.reflection = {
                             whatIDid: textareas.whatIDid.value.trim(),
                             whatILearned: textareas.whatILearned.value.trim(),
@@ -358,8 +392,13 @@ function renderProfilePage() {
                             .map(url => url.trim())
                             .filter(url => url && validWebUrl(url));
 
-                        savePortfolios(portfolios);
-                        renderProfilePage();
+                        try {
+    await savePortfolios(portfolios);
+    renderProfilePage();
+} catch (error) {
+    console.error("Could not update Portfolio Item:", error);
+    alert("Could not save changes to server. Please try again.");
+}
                     });
 
                     cancelBtn.addEventListener("click", () => {
@@ -377,11 +416,23 @@ function renderProfilePage() {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    setupFormPage();
-    renderProfilePage();
-});
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        await loadPortfolios();
+        setupFormPage();
+        renderProfilePage();
+    } catch (error) {
+        console.error("Could not load portfolios:", error);
 
+        const list = document.getElementById("portfolio-list");
+        if (list) {
+            list.textContent = "Unable to connect to the server. Please refresh the page.";
+        }
+
+        showMessage("portfolio-message", "Unable to connect to the server.", true);
+        showMessage("item-message", "Unable to connect to the server.", true);
+    }
+});
 // =============================================================================== //
 
 
@@ -1017,58 +1068,67 @@ if (importJsonBtn && importJsonInput) {
                     importJsonInput.value = "";
                 });
 
-                importBtn.addEventListener("click", () => {
-                    const selectedIndex = Number(select.value);
-                    const selectedPortfolio = portfolios[selectedIndex];
+                importBtn.addEventListener("click", async () => {
+    const selectedIndex = Number(select.value);
+    const selectedPortfolio = portfolios[selectedIndex];
 
-                    if (!selectedPortfolio) {
-                        alert("Please select a valid Portfolio.");
-                        return;
-                    }
+    if (!selectedPortfolio) {
+        alert("Please select a valid Portfolio.");
+        return;
+    }
 
-                    const newItem = {
-                        id: makeId("item"),
-                        title: importedItem.title.trim(),
-                        type: importedItem.type || "Challenge",
-                        date: importedItem.date || "",
-                        role: importedItem.role || "",
-                        description: importedItem.description || "",
-                        skills: importedItem.skills,
-                        reflection: {
-                            whatIDid: importedItem.reflection.whatIDid || "",
-                            whatILearned: importedItem.reflection.whatILearned || "",
-                            challenge: importedItem.reflection.challenge || "",
-                            nextStep: importedItem.reflection.nextStep || ""
-                        },
-                        evidence: importedItem.evidence.filter(
-                            url => typeof url === "string" && validWebUrl(url)
-                        )
-                    };
+    const newItem = {
+        id: makeId("item"),
+        title: importedItem.title.trim(),
+        type: importedItem.type || "Challenge",
+        date: importedItem.date || "",
+        role: importedItem.role || "",
+        description: importedItem.description || "",
+        skills: importedItem.skills,
+        reflection: {
+            whatIDid: importedItem.reflection.whatIDid || "",
+            whatILearned: importedItem.reflection.whatILearned || "",
+            challenge: importedItem.reflection.challenge || "",
+            nextStep: importedItem.reflection.nextStep || ""
+        },
+        evidence: importedItem.evidence.filter(
+            url => typeof url === "string" && validWebUrl(url)
+        )
+    };
 
-                    selectedPortfolio.items = selectedPortfolio.items || [];
-                    selectedPortfolio.items.push(newItem);
+    selectedPortfolio.items = selectedPortfolio.items || [];
+    selectedPortfolio.items.push(newItem);
 
-                    savePortfolios(portfolios);
-                    renderProfilePage();
+    importBtn.disabled = true;
+    importBtn.textContent = "Importing...";
 
-                    overlay.remove();
-                    importJsonInput.value = "";
+    try {
+        await savePortfolios(portfolios);
 
-                    alert("Portfolio Item imported successfully!");
+        renderProfilePage();
+        overlay.remove();
+        importJsonInput.value = "";
+
+        alert("Portfolio Item imported successfully!");
+    } catch (error) {
+        console.error("Import Error:", error);
+
+        selectedPortfolio.items = selectedPortfolio.items.filter(
+            item => item.id !== newItem.id
+        );
+
+        alert("Could not save imported item to server. Please try again.");
+
+        importBtn.disabled = false;
+        importBtn.textContent = "Import";
+    }
                 });
-
             } catch (error) {
                 console.error("Import Error:", error);
                 alert("Invalid JSON file or unable to import Portfolio Item.");
                 importJsonInput.value = "";
             }
         };
-
-        reader.onerror = () => {
-            alert("Unable to read the selected file.");
-            importJsonInput.value = "";
-        };
-
-        reader.readAsText(file);
     });
 }
+

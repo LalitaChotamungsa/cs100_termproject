@@ -1,4 +1,8 @@
+const importJsonBtn = document.getElementById("importJsonBtn");
+const importJsonInput = document.getElementById("importJsonInput");
 
+console.log("Import button:", importJsonBtn);
+console.log("Import input:", importJsonInput);
 
 const STORAGE_KEY = "powerUpPortfolios";
 const API_URL = "./api/portfolios.php";
@@ -960,8 +964,6 @@ if (document.readyState === "loading") {
 
 
 /* IMPORT PORTFOLIO ITEM (JSON) */
-const importJsonBtn = document.getElementById("importJsonBtn");
-const importJsonInput = document.getElementById("importJsonInput");
 
 if (importJsonBtn && importJsonInput) {
     importJsonBtn.addEventListener("click", () => {

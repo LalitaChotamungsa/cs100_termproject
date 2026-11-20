@@ -555,7 +555,7 @@ body {
 
 .profile-page {
     min-height: 100vh;
-    background-image: url("../media/bluebackground.jpg");
+    background-image: url("../Media/bluebackground.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -605,7 +605,7 @@ body {
 
 .profile-page {
     min-height: 100vh;
-    background-image: url("../media/bluebackground.jpg");
+    background-image: url("../Media/bluebackground.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

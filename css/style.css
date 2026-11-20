@@ -29,7 +29,7 @@ body {
         margin: 0;
         padding: 0;
 
-        background-image: url("../media/bluebackground.jpg");
+        background-image: url("../Media/bluebackground.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -46,7 +46,7 @@ body {
 }
 .section4 {
     min-height: 100vh;
-    background-image: url("../media/mountain.jpg");
+    background-image: url("../Media/mountain.jpg");
     background-size: cover;
     background-position: center;
 }

@@ -1072,7 +1072,7 @@ p {
     font-size: 15px;
     line-height: 1.8;
 }
-#shareBtn,
+#exportBtn,
 #downloadBtn,
 #restartBtn {
     margin: 8px 5px;
@@ -1084,7 +1084,7 @@ p {
     font-weight: 700;
     cursor: pointer;
 }
-#shareBtn:hover,
+#exportBtn:hover,
 #downloadBtn:hover,
 #restartBtn:hover {
     background: #24385f;
@@ -1172,4 +1172,13 @@ p {
     z-index: 11;
     pointer-events: auto;
     cursor: pointer;
+}
+
+#exportBtn {
+    background-color: #31487A !important;
+    color: #fff !important;
+    border: none;
+}
+#exportBtn:hover {
+    background-color: #24375F !important;
 }

@@ -201,6 +201,7 @@ function createTextElement(tagName, className, text) {
     return element;
 }
 
+
 function renderProfilePage() {
     const list = document.getElementById("portfolio-list");
     if (!list) return;
@@ -209,57 +210,64 @@ function renderProfilePage() {
     list.replaceChildren();
 
     if (portfolios.length === 0) {
-    const empty = createTextElement("div", "empty-state", "No portfolios yet. Create your first portfolio to get started.");
-    list.append(empty);
-    return;
-}
+        list.append(createTextElement("div", "empty-state", "No portfolios yet. Create your first portfolio to get started."));
+        return;
+    }
 
     portfolios.forEach((portfolio) => {
         const card = createTextElement("section", "profile-card mb-4");
         const header = createTextElement("div", "profile-card-header");
         const name = createTextElement("h2", "h4 fw-bold mb-1", portfolio.displayName);
-        const count = createTextElement("span", "badge text-bg-light", `${portfolio.items.length} item(s)`);
+        const count = createTextElement("span", "badge text-bg-light", `${(portfolio.items || []).length} item(s)`);
+
         header.append(name, count);
         card.append(header);
 
         const intro = createTextElement("div", "profile-intro");
-        const introRows = [
+
+        [
             ["What I Enjoy", portfolio.enjoy],
             ["What I've Tried", portfolio.tried],
             ["What I'm Curious About", portfolio.curious]
-        ];
-
-        introRows.forEach(([label, value]) => {
+        ].forEach(([label, value]) => {
             const block = createTextElement("div", "mb-2");
-            block.append(createTextElement("h3", "h6 fw-bold mb-1", label));
-            block.append(createTextElement("p", "mb-0 text-secondary", value));
+            block.append(
+                createTextElement("h3", "h6 fw-bold mb-1", label),
+                createTextElement("p", "mb-0 text-secondary", value)
+            );
             intro.append(block);
         });
-        card.append(intro);
 
-        const itemsHeading = createTextElement("h3", "h5 fw-bold mt-4 mb-3", "Portfolio Items");
-        card.append(itemsHeading);
+        card.append(intro);
+        card.append(createTextElement("h3", "h5 fw-bold mt-4 mb-3", "Portfolio Items"));
 
         if (!portfolio.items || portfolio.items.length === 0) {
             card.append(createTextElement("p", "text-secondary", "No items have been added to this portfolio."));
         } else {
             portfolio.items.forEach((item) => {
                 const itemCard = createTextElement("article", "item-card mb-3");
+
                 const top = createTextElement("div", "d-flex flex-wrap justify-content-between gap-2");
-                top.append(createTextElement("h4", "h6 fw-bold mb-1", item.title));
-                top.append(createTextElement("span", "badge text-bg-light", item.type));
+                top.append(
+                    createTextElement("h4", "h6 fw-bold mb-1", item.title),
+                    createTextElement("span", "badge text-bg-light", item.type)
+                );
                 itemCard.append(top);
-                itemCard.append(createTextElement("p", "small text-secondary mb-2", `${item.date} · ${item.role}`));
+
+                itemCard.append(createTextElement("p", "small text-secondary mb-2", `${item.date || ""} · ${item.role || ""}`));
                 itemCard.append(createTextElement("p", "mb-3", item.description));
 
                 const skills = createTextElement("div", "d-flex flex-wrap gap-2 mb-3");
+
                 (item.skills || []).forEach((skill) => {
                     skills.append(createTextElement("span", "badge skill-badge", skill));
                 });
+
                 itemCard.append(skills);
 
                 const reflection = item.reflection || {};
                 const reflectionBox = createTextElement("div", "reflection-box");
+
                 [
                     ["What I did", reflection.whatIDid],
                     ["What I learned", reflection.whatILearned],
@@ -267,14 +275,17 @@ function renderProfilePage() {
                     ["Next step", reflection.nextStep]
                 ].forEach(([label, value]) => {
                     const p = createTextElement("p", "mb-2");
-                    const strong = createTextElement("strong", "me-1", `${label}:`);
-                    p.append(strong, document.createTextNode(value || ""));
+                    p.append(
+                        createTextElement("strong", "me-1", `${label}:`),
+                        document.createTextNode(value || "")
+                    );
                     reflectionBox.append(p);
                 });
+
                 itemCard.append(reflectionBox);
 
-                const evidenceTitle = createTextElement("p", "fw-bold small mt-3 mb-1", "Evidence");
-                itemCard.append(evidenceTitle);
+                itemCard.append(createTextElement("p", "fw-bold small mt-3 mb-1", "Evidence"));
+
                 (item.evidence || []).forEach((url) => {
                     if (validWebUrl(url)) {
                         const link = createTextElement("a", "evidence-link d-block", url);
@@ -285,6 +296,78 @@ function renderProfilePage() {
                     }
                 });
 
+                // EDIT BUTTON
+                const editBtn = createTextElement("button", "btn btn-primary btn-sm mt-3", "EDIT");
+                editBtn.type = "button";
+
+                editBtn.addEventListener("click", () => {
+                    const editor = createTextElement("div", "mt-3");
+
+                    const fields = [
+                        ["What I did", "whatIDid"],
+                        ["What I learned", "whatILearned"],
+                        ["Challenge", "challenge"],
+                        ["Next step", "nextStep"]
+                    ];
+
+                    const textareas = {};
+
+                    fields.forEach(([label, key]) => {
+                        const fieldLabel = createTextElement("label", "form-label fw-bold mt-2", label);
+                        const textarea = document.createElement("textarea");
+
+                        textarea.className = "form-control";
+                        textarea.rows = 3;
+                        textarea.value = reflection[key] || "";
+
+                        fieldLabel.append(textarea);
+                        editor.append(fieldLabel);
+
+                        textareas[key] = textarea;
+                    });
+
+                    const evidenceLabel = createTextElement("label", "form-label fw-bold mt-2", "Evidence URLs (one URL per line)");
+                    const evidenceInput = document.createElement("textarea");
+
+                    evidenceInput.className = "form-control";
+                    evidenceInput.rows = 3;
+                    evidenceInput.value = (item.evidence || []).join("\n");
+
+                    evidenceLabel.append(evidenceInput);
+                    editor.append(evidenceLabel);
+
+                    const saveBtn = createTextElement("button", "btn btn-success btn-sm mt-3 me-2", "Save");
+                    saveBtn.type = "button";
+
+                    const cancelBtn = createTextElement("button", "btn btn-secondary btn-sm mt-3", "Cancel");
+                    cancelBtn.type = "button";
+
+                    editor.append(saveBtn, cancelBtn);
+                    editBtn.replaceWith(editor);
+
+                    saveBtn.addEventListener("click", () => {
+                        item.reflection = {
+                            whatIDid: textareas.whatIDid.value.trim(),
+                            whatILearned: textareas.whatILearned.value.trim(),
+                            challenge: textareas.challenge.value.trim(),
+                            nextStep: textareas.nextStep.value.trim()
+                        };
+
+                        item.evidence = evidenceInput.value
+                            .split("\n")
+                            .map(url => url.trim())
+                            .filter(url => url && validWebUrl(url));
+
+                        savePortfolios(portfolios);
+                        renderProfilePage();
+                    });
+
+                    cancelBtn.addEventListener("click", () => {
+                        renderProfilePage();
+                    });
+                });
+
+                itemCard.append(editBtn);
                 card.append(itemCard);
             });
         }
@@ -292,6 +375,7 @@ function renderProfilePage() {
         list.append(card);
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     setupFormPage();
@@ -721,7 +805,7 @@ const types = {
         showQuizPage("home");
     }
 
-    function setupQuiz() {
+   function setupQuiz() {
     console.log("Quiz setup started");
 
     if (!getElement("home") || !getElement("quiz") || !getElement("questionText")) {
@@ -742,15 +826,16 @@ const types = {
     });
 
     getElement("nextBtn")?.addEventListener("click", () => {
-    console.log("Next button clicked");
-    const question = questionOrder[currentQuestion];
-    if (!question || !answers[question.id]) return;
-    if (currentQuestion < questionOrder.length - 1) {
-        currentQuestion++;
-        renderQuestion();
-    } else {
-        calculateResult();
-    }
+        console.log("Next button clicked");
+        const question = questionOrder[currentQuestion];
+        if (!question || !answers[question.id]) return;
+
+        if (currentQuestion < questionOrder.length - 1) {
+            currentQuestion++;
+            renderQuestion();
+        } else {
+            calculateResult();
+        }
     });
 
     getElement("backBtn")?.addEventListener("click", () => {
@@ -762,12 +847,228 @@ const types = {
 
     getElement("restartBtn")?.addEventListener("click", restartQuiz);
     getElement("downloadBtn")?.addEventListener("click", downloadResult);
-    getElement("shareBtn")?.addEventListener("click", shareResult);
+    getElement("exportBtn")?.addEventListener("click", exportPortfolioItem);
+}
+
+// Export Portfolio Item JSON
+function exportPortfolioItem() {
+    if (!resultType) {
+        alert("กรุณาทำแบบทดสอบให้เสร็จก่อน");
+        return;
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", setupQuiz);
-    } else {
-        setupQuiz();
-    }
+    const result = types[resultType];
+    const today = new Date();
+    const date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+    const portfolioItem = {
+        id: "item-" + Date.now(),
+        title: "Personality Quiz",
+        type: "Challenge",
+        date: date,
+        role: "Quiz Participant",
+        description: `${result.emoji} ${result.name} - ${result.english}: ${result.headline} ${result.description}`,
+        skills: [
+            "Self-Awareness",
+            "Decision Making",
+            "Self-Reflection"
+        ],
+        reflection: {
+            whatIDid: "Completed an 8-question personality quiz.",
+            whatILearned: `My personality type is ${result.name} (${result.english}).`,
+            challenge: "Choosing answers that honestly reflect my personality.",
+            nextStep: "Use what I learned to better understand myself and improve my strengths."
+        },
+        evidence: []
+    };
+
+    const blob = new Blob([JSON.stringify(portfolioItem, null, 2)], {
+        type: "application/json"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "personality-quiz-portfolio-item.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupQuiz);
+} else {
+    setupQuiz();
+}
 })();
+
+
+
+
+/* IMPORT PORTFOLIO ITEM (JSON) */
+const importJsonBtn = document.getElementById("importJsonBtn");
+const importJsonInput = document.getElementById("importJsonInput");
+
+if (importJsonBtn && importJsonInput) {
+    importJsonBtn.addEventListener("click", () => {
+        importJsonInput.click();
+    });
+
+    importJsonInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        if (!file.name.toLowerCase().endsWith(".json")) {
+            alert("Please select a JSON file.");
+            importJsonInput.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            try {
+                const importedItem = JSON.parse(event.target.result);
+
+                if (
+                    !importedItem ||
+                    typeof importedItem !== "object" ||
+                    Array.isArray(importedItem) ||
+                    typeof importedItem.title !== "string" ||
+                    !importedItem.title.trim() ||
+                    !Array.isArray(importedItem.skills) ||
+                    !importedItem.reflection ||
+                    typeof importedItem.reflection !== "object" ||
+                    Array.isArray(importedItem.reflection) ||
+                    !Array.isArray(importedItem.evidence)
+                ) {
+                    throw new Error("Invalid Portfolio Item structure");
+                }
+
+                const portfolios = getPortfolios();
+
+                if (portfolios.length === 0) {
+                    alert("Please create a Portfolio first.");
+                    return;
+                }
+
+                // Select destination Portfolio
+                const overlay = document.createElement("div");
+                overlay.style.cssText = `
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0,0,0,0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                `;
+
+                const modal = document.createElement("div");
+                modal.style.cssText = `
+                    background: white;
+                    padding: 25px;
+                    border-radius: 12px;
+                    width: 90%;
+                    max-width: 400px;
+                `;
+
+                const heading = document.createElement("h5");
+                heading.textContent = "Select Portfolio";
+                heading.style.marginBottom = "15px";
+
+                const select = document.createElement("select");
+                select.className = "form-select mb-3";
+
+                portfolios.forEach((portfolio, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = portfolio.displayName;
+                    select.appendChild(option);
+                });
+
+                const buttonGroup = document.createElement("div");
+                buttonGroup.style.cssText = `
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 10px;
+                `;
+
+                const cancelBtn = document.createElement("button");
+                cancelBtn.type = "button";
+                cancelBtn.className = "btn btn-secondary";
+                cancelBtn.textContent = "Cancel";
+
+                const importBtn = document.createElement("button");
+                importBtn.type = "button";
+                importBtn.className = "btn btn-primary";
+                importBtn.textContent = "Import";
+
+                buttonGroup.append(cancelBtn, importBtn);
+                modal.append(heading, select, buttonGroup);
+                overlay.appendChild(modal);
+                document.body.appendChild(overlay);
+
+                cancelBtn.addEventListener("click", () => {
+                    overlay.remove();
+                    importJsonInput.value = "";
+                });
+
+                importBtn.addEventListener("click", () => {
+                    const selectedIndex = Number(select.value);
+                    const selectedPortfolio = portfolios[selectedIndex];
+
+                    if (!selectedPortfolio) {
+                        alert("Please select a valid Portfolio.");
+                        return;
+                    }
+
+                    const newItem = {
+                        id: makeId("item"),
+                        title: importedItem.title.trim(),
+                        type: importedItem.type || "Challenge",
+                        date: importedItem.date || "",
+                        role: importedItem.role || "",
+                        description: importedItem.description || "",
+                        skills: importedItem.skills,
+                        reflection: {
+                            whatIDid: importedItem.reflection.whatIDid || "",
+                            whatILearned: importedItem.reflection.whatILearned || "",
+                            challenge: importedItem.reflection.challenge || "",
+                            nextStep: importedItem.reflection.nextStep || ""
+                        },
+                        evidence: importedItem.evidence.filter(
+                            url => typeof url === "string" && validWebUrl(url)
+                        )
+                    };
+
+                    selectedPortfolio.items = selectedPortfolio.items || [];
+                    selectedPortfolio.items.push(newItem);
+
+                    savePortfolios(portfolios);
+                    renderProfilePage();
+
+                    overlay.remove();
+                    importJsonInput.value = "";
+
+                    alert("Portfolio Item imported successfully!");
+                });
+
+            } catch (error) {
+                console.error("Import Error:", error);
+                alert("Invalid JSON file or unable to import Portfolio Item.");
+                importJsonInput.value = "";
+            }
+        };
+
+        reader.onerror = () => {
+            alert("Unable to read the selected file.");
+            importJsonInput.value = "";
+        };
+
+        reader.readAsText(file);
+    });
+}

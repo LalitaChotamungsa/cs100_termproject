@@ -90,6 +90,76 @@ function validWebUrl(value) {
     }
 }
 
+/* ---------- IMPORT helpers ---------- */
+function todayIso() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function isRealIsoDate(value) {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const d = new Date(value + "T00:00:00Z");
+    return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === value;
+}
+
+/* returns "" when the file is usable, otherwise a message that says what is wrong */
+function checkImportedItem(item) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+        return "The file must contain ONE Portfolio Item (a JSON object).";
+    }
+    if (typeof item.title !== "string" || !item.title.trim()) {
+        return "The item has no title.";
+    }
+    if (item.skills !== undefined && !Array.isArray(item.skills)) {
+        return "skills must be a list.";
+    }
+    if (item.reflection !== undefined &&
+        (item.reflection === null || typeof item.reflection !== "object" || Array.isArray(item.reflection))) {
+        return "reflection must be an object (whatIDid, whatILearned, challenge, nextStep).";
+    }
+    if (item.evidence !== undefined && !Array.isArray(item.evidence)) {
+        return "evidence must be a list of links.";
+    }
+    return "";
+}
+
+/* builds a clean item that the server will accept; evidence can be empty here,
+   the tester must add Reflection + Evidence with EDIT afterwards */
+function buildImportedItem(src) {
+    const text = (v, fallback, max) =>
+        typeof v === "string" && v.trim() ? v.trim().slice(0, max) : fallback;
+    const refl = src.reflection || {};
+    const links = Array.isArray(src.evidence) ? src.evidence : [];
+    const evidence = links
+        .filter((u) => typeof u === "string" && validWebUrl(u.trim()))
+        .map((u) => u.trim())
+        .slice(0, 20);
+    const title = text(src.title, "Imported item", 150);
+
+    return {
+        item: {
+            id: makeId("item"),
+            title: title,
+            type: text(src.type, "Challenge", 80),
+            date: isRealIsoDate(src.date) ? src.date : todayIso(),
+            role: text(src.role, "Challenge Participant", 100),
+            description: text(src.description, "Challenge: " + title, 2000),
+            skills: (Array.isArray(src.skills) ? src.skills : [])
+                .filter((s) => typeof s === "string" && s.trim())
+                .map((s) => s.trim().slice(0, 50))
+                .slice(0, 30),
+            reflection: {
+                whatIDid: text(refl.whatIDid, "", 2000),
+                whatILearned: text(refl.whatILearned, "", 2000),
+                challenge: text(refl.challenge, "", 2000),
+                nextStep: text(refl.nextStep, "", 2000)
+            },
+            evidence: evidence
+        },
+        skippedLinks: links.length - evidence.length
+    };
+}
+
 /* ---------- EXPORT my-portfolio.json ---------- */
 function downloadJsonFile(filename, data) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -437,17 +507,31 @@ function renderProfilePage() {
                     editBtn.replaceWith(editor);
 
                     saveBtn.addEventListener("click", async () => {
-                        item.reflection = {
-                            whatIDid: textareas.whatIDid.value.trim(),
-                            whatILearned: textareas.whatILearned.value.trim(),
-                            challenge: textareas.challenge.value.trim(),
-                            nextStep: textareas.nextStep.value.trim()
-                        };
+                        const reflection = {
+                        whatIDid: textareas.whatIDid.value.trim(),
+                        whatILearned: textareas.whatILearned.value.trim(),
+                        challenge: textareas.challenge.value.trim(),
+                        nextStep: textareas.nextStep.value.trim()
+                    };
+                    const missing = Object.keys(reflection).filter((k) => !reflection[k]);
+                    if (missing.length > 0) {
+                        alert("Please fill in: " + missing.join(", "));
+                        return;
+                    }
 
-                        item.evidence = evidenceInput.value
-                            .split("\n")
-                            .map(url => url.trim())
-                            .filter(url => url && validWebUrl(url));
+                    const lines = evidenceInput.value.split("\n").map((u) => u.trim()).filter(Boolean);
+                    const badLinks = lines.filter((u) => !validWebUrl(u));
+                    if (lines.length === 0) {
+                        alert("Please add at least 1 Evidence link.");
+                        return;
+                    }
+                    if (badLinks.length > 0) {
+                        alert("These links are not valid (must start with http:// or https://):\n" + badLinks.join("\n"));
+                        return;
+                    }
+
+item.reflection = reflection;
+item.evidence = lines;
 
                         try {
     await savePortfolios(portfolios);
@@ -1036,19 +1120,9 @@ if (importJsonBtn && importJsonInput) {
             try {
                 const importedItem = JSON.parse(event.target.result);
 
-                if (
-                    !importedItem ||
-                    typeof importedItem !== "object" ||
-                    Array.isArray(importedItem) ||
-                    typeof importedItem.title !== "string" ||
-                    !importedItem.title.trim() ||
-                    !Array.isArray(importedItem.skills) ||
-                    !importedItem.reflection ||
-                    typeof importedItem.reflection !== "object" ||
-                    Array.isArray(importedItem.reflection) ||
-                    !Array.isArray(importedItem.evidence)
-                ) {
-                    throw new Error("Invalid Portfolio Item structure");
+                const problem = checkImportedItem(importedItem);
+                if (problem) {
+                throw new Error(problem);
                 }
 
                 const portfolios = getPortfolios();
@@ -1131,24 +1205,8 @@ if (importJsonBtn && importJsonInput) {
         return;
     }
 
-    const newItem = {
-        id: makeId("item"),
-        title: importedItem.title.trim(),
-        type: importedItem.type || "Challenge",
-        date: importedItem.date || "",
-        role: importedItem.role || "",
-        description: importedItem.description || "",
-        skills: importedItem.skills,
-        reflection: {
-            whatIDid: importedItem.reflection.whatIDid || "",
-            whatILearned: importedItem.reflection.whatILearned || "",
-            challenge: importedItem.reflection.challenge || "",
-            nextStep: importedItem.reflection.nextStep || ""
-        },
-        evidence: importedItem.evidence.filter(
-            url => typeof url === "string" && validWebUrl(url)
-        )
-    };
+    const built = buildImportedItem(importedItem);
+    const newItem = built.item;
 
     selectedPortfolio.items = selectedPortfolio.items || [];
     selectedPortfolio.items.push(newItem);
@@ -1163,7 +1221,10 @@ if (importJsonBtn && importJsonInput) {
         overlay.remove();
         importJsonInput.value = "";
 
-        alert("Portfolio Item imported successfully!");
+        alert(
+        "Portfolio Item imported. Click EDIT to add your Reflection and Evidence (required)." +
+        (built.skippedLinks ? "\n" + built.skippedLinks + " invalid link(s) were skipped." : "")
+        );
     } catch (error) {
         console.error("Import Error:", error);
 
@@ -1179,7 +1240,7 @@ if (importJsonBtn && importJsonInput) {
                 });
             } catch (error) {
                 console.error("Import Error:", error);
-                alert("Invalid JSON file or unable to import Portfolio Item.");
+                alert("Cannot import: " + error.message);
                 importJsonInput.value = "";
             }
         };

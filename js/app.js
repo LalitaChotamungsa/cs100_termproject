@@ -2,9 +2,19 @@ const importJsonBtn = document.getElementById("importJsonBtn");
 const importJsonInput = document.getElementById("importJsonInput");
 
 
+
 const STORAGE_KEY = "powerUpPortfolios";
 const API_URL = "./api/portfolios.php";
 let portfoliosCache = [];
+let lastSyncedJson = {};
+
+function rememberSynced(list) {
+    lastSyncedJson = {};
+    list.forEach((p) => {
+        lastSyncedJson[p.id] = JSON.stringify(p);
+    });
+}
+
 
 function getPortfolios() {
     return portfoliosCache;
@@ -30,21 +40,28 @@ async function loadPortfolios() {
         }
     }
 
-    portfoliosCache = serverPortfolios;
+        portfoliosCache = serverPortfolios;
+    rememberSynced(serverPortfolios);
     return portfoliosCache;
 }
 
 async function savePortfolios(portfolios) {
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(portfolios)
-    });
+    const changed = portfolios.filter(
+        (p) => lastSyncedJson[p.id] !== JSON.stringify(p)
+    );
 
-    if (!response.ok) {
-        throw new Error("Could not save portfolios to server");
+    if (changed.length > 0) {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(changed)
+        });
+        if (!response.ok) {
+            throw new Error("Could not save portfolios to server");
+        }
+        changed.forEach((p) => {
+            lastSyncedJson[p.id] = JSON.stringify(p);
+        });
     }
 
     portfoliosCache = portfolios;

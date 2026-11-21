@@ -1,6 +1,6 @@
 {
   "id": "portfolio-001",
-  "displayName": "จิรภาส เขียวเจริญ",
+  "displayName": "Sample Learner 1",
   "enjoy": "ชอบรถและนาฬิกา ชอบสร้างเว็บไซต์และลองเขียนโค้ดเพื่อทำสิ่งที่ตัวเองสนใจ",
   "tried": "เคยสร้างเว็บไซต์ Learning Portfolio หน้าเดียวด้วย HTML และ CSS และทำแบบฝึกหัดหน้าโปรไฟล์ด้วย CSS (Margin, Border, ID Selector)",
   "curious": "อยากทำ animation และลูกเล่นให้หน้าเว็บขยับได้ เหมือนเว็บไซต์ของ Apple",
@@ -38,7 +38,7 @@
         "nextStep": "ฝึกฝนพัฒนาให้คุ้นชินกับ CSS มากกว่าเดิม"
       },
       "evidence": [
-        "https://github.com/Good50357/A2_6909650357"
+        "https://example.com/sample-work"
       ]
     }
   ]

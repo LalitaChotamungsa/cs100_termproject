@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+.vscode/
+
+# Secrets - NEVER commit (AWS keys, key pairs, passwords)
+*.pem
+*.key
+.env
+.env.*
+credentials*
+
+# Misc
+*.zip
+*.log
+node_modules/

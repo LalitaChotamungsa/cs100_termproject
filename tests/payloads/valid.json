@@ -1,0 +1,27 @@
+[
+  {
+    "id": "issue25-valid",
+    "displayName": "Issue 25 Test",
+    "enjoy": "Testing",
+    "tried": "Backend validation",
+    "curious": "API behavior",
+    "items": [
+      {
+        "id": "item-valid",
+        "title": "Valid test portfolio",
+        "type": "Project",
+        "date": "2026-01-15",
+        "role": "Developer",
+        "description": "A valid payload for Issue 25.",
+        "skills": ["PHP", "Testing"],
+        "reflection": {
+          "whatIDid": "Created a valid test payload.",
+          "whatILearned": "How the API validates portfolios.",
+          "challenge": "Preparing test data.",
+          "nextStep": "Run the API test."
+        },
+        "evidence": ["https://example.com/evidence"]
+      }
+    ]
+  }
+]

@@ -578,8 +578,16 @@ body {
 
 .profile-page #portfolio-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));   /* 2 คอลัมน์ ตามแบบร่าง */
     gap: 24px;
+    align-items: start;   /* การ์ดสูงตามเนื้อหา ไม่ยืดทับกัน */
+}
+
+/* มือถือ/จอแคบ: ให้เหลือ 1 คอลัมน์ */
+@media (max-width: 768px) {
+    .profile-page #portfolio-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 .profile-page #portfolio-list .card {
@@ -612,9 +620,11 @@ body {
 }
 
 .profile-card {
+    min-width: 0;          /* ให้การ์ดหดได้ใน grid ไม่ดันเนื้อหาล้นออกนอกการ์ด */
+    overflow-wrap: anywhere;   /* ข้อความยาว ๆ ตัดขึ้นบรรทัดใหม่ */
     background: rgba(255, 255, 255, 0.96);
     padding: 28px;
-    margin-bottom: 28px;
+    margin-bottom: 0;      /* ระยะห่างให้ grid (gap) จัดการแทน */
     border-radius: 20px;
     border: 1px solid #e5e7eb;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
@@ -632,8 +642,8 @@ body {
 
 .profile-intro {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr;   /* เรียงลงมาทีละกล่อง (เดิม 3 คอลัมน์ ทำให้แคบจนทับกัน) */
+    gap: 12px;
     margin-top: 20px;
 }
 
@@ -1261,4 +1271,48 @@ p {
 .empty-items-text {
   color: #475569;
   font-size: 0.9rem;
+}
+/* =========================
+   PAGINATION (ปุ่มเปลี่ยนหน้า)
+========================= */
+.pagination-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 32px 0 16px;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #31487A;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #31487A;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+    background: #e8eef8;
+}
+
+.page-btn.active {
+    background: #31487A;   /* หน้าปัจจุบัน */
+    color: #ffffff;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-dots {
+    color: #31487A;
+    font-weight: 700;
+    padding: 0 4px;
 }

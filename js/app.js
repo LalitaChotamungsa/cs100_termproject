@@ -350,6 +350,82 @@ function createTextElement(tagName, className, text) {
 }
 
 
+// ---------- Pagination (แบ่งหน้า) ----------
+const PORTFOLIOS_PER_PAGE = 4;   // 1 หน้า = 4 การ์ด (2 คอลัมน์ x 2 แถว ตามแบบร่าง)
+let currentPage = 1;             // หน้าที่กำลังดูอยู่
+
+// สร้างลิสต์เลขหน้าที่จะโชว์ เช่น [1, 2, 3, "...", 10]
+function getPageNumbers(current, total) {
+    // ถ้ามีไม่เกิน 5 หน้า โชว์ทุกหน้าเลย
+    if (total <= 5) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    // ถ้าเยอะกว่านั้น โชว์: หน้าแรก, หน้าก่อน/ปัจจุบัน/ถัดไป, หน้าสุดท้าย
+    const pages = [1];
+    if (current > 3) pages.push("...");
+
+    const start = Math.max(2, current - 1);
+    const end = Math.min(total - 1, current + 1);
+    for (let p = start; p <= end; p++) {
+        pages.push(p);
+    }
+
+    if (current < total - 2) pages.push("...");
+    pages.push(total);
+    return pages;
+}
+
+// วาดปุ่ม ◀ 1 2 3 ... ▶ ลงใน <nav id="pagination">
+function renderPagination(totalPages) {
+    const nav = document.getElementById("pagination");
+    if (!nav) return;
+
+    nav.replaceChildren();
+
+    // มีหน้าเดียวไม่ต้องโชว์ปุ่มเปลี่ยนหน้า
+    if (totalPages <= 1) return;
+
+    function goToPage(page) {
+        currentPage = page;
+        renderProfilePage();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ปุ่มย้อนกลับ ◀
+    const prevBtn = createTextElement("button", "page-btn page-arrow", "◀");
+    prevBtn.type = "button";
+    prevBtn.setAttribute("aria-label", "Previous page");
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener("click", () => goToPage(currentPage - 1));
+    nav.append(prevBtn);
+
+    // ปุ่มเลขหน้า
+    getPageNumbers(currentPage, totalPages).forEach((page) => {
+        if (page === "...") {
+            nav.append(createTextElement("span", "page-dots", "…"));
+            return;
+        }
+
+        const btn = createTextElement("button", "page-btn", String(page));
+        btn.type = "button";
+        if (page === currentPage) {
+            btn.classList.add("active");
+            btn.setAttribute("aria-current", "page");
+        }
+        btn.addEventListener("click", () => goToPage(page));
+        nav.append(btn);
+    });
+
+    // ปุ่มถัดไป ▶
+    const nextBtn = createTextElement("button", "page-btn page-arrow", "▶");
+    nextBtn.type = "button";
+    nextBtn.setAttribute("aria-label", "Next page");
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener("click", () => goToPage(currentPage + 1));
+    nav.append(nextBtn);
+}
+
 function renderProfilePage() {
     const list = document.getElementById("portfolio-list");
     if (!list) return;
@@ -359,10 +435,20 @@ function renderProfilePage() {
 
     if (portfolios.length === 0) {
         list.append(createTextElement("div", "empty-state", "No portfolios yet. Create your first portfolio to get started."));
+        renderPagination(0);
         return;
     }
 
-    portfolios.forEach((portfolio) => {
+    // คำนวณว่ามีกี่หน้า และกันไม่ให้ currentPage เกินจำนวนหน้าจริง
+    const totalPages = Math.ceil(portfolios.length / PORTFOLIOS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    // ตัดเอาเฉพาะ 4 คนของหน้านี้ (slice) มาวาด
+    const startIndex = (currentPage - 1) * PORTFOLIOS_PER_PAGE;
+    const pagePortfolios = portfolios.slice(startIndex, startIndex + PORTFOLIOS_PER_PAGE);
+
+    pagePortfolios.forEach((portfolio) => {
         const card = createTextElement("section", "profile-card mb-4");
         const header = createTextElement("div", "profile-card-header");
         const name = createTextElement("h2", "h4 fw-bold mb-1", portfolio.displayName);
@@ -545,6 +631,9 @@ item.evidence = lines;
 
         list.append(card);
     });
+
+    // วาดปุ่มเปลี่ยนหน้าไว้ใต้การ์ด
+    renderPagination(totalPages);
 }
 
 
@@ -1238,4 +1327,3 @@ if (importJsonBtn && importJsonInput) {
         reader.readAsText(file);
     });
 }
-

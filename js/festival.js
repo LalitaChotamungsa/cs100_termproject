@@ -799,6 +799,7 @@
     function boot() {
         document.body.classList.add("festival");
         Night.start();
+        if (document.querySelector(".section1")) { document.body.classList.add("index-page"); }   /* [ADDED] marks index.html so festival.css can style it */
         Krathongs.start();   /* [ADDED] floating krathongs */
         if (document.body.classList.contains("profile-page")) { Hanging.start(); }
         Fireworks.watch();

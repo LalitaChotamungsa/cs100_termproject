@@ -51,3 +51,121 @@ body.festival.form-page > footer {
 @media (prefers-reduced-motion: reduce) {
     .festival-fireworks { display: none; }
 }
+
+
+/* =====================================================================
+   [ADDED] index.html night theme  (applies only when body has .index-page,
+   which festival.js adds automatically when it finds .section1)
+   Safe to delete this whole block together with the rest of this file.
+   ===================================================================== */
+
+/* let the night scene show through every section (they had their own pictures/colours) */
+body.festival.index-page .section1,
+body.festival.index-page .section2,
+body.festival.index-page .section4 {
+    background: none !important;
+    background-color: transparent !important;
+}
+
+/* ---- hero: lay out in one screen so the text under the button is no longer cut off ---- */
+body.festival.index-page .section1 {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+}
+body.festival.index-page .section1 > br { display: none; }   /* the <br> spacers are replaced by margins */
+
+body.festival.index-page .section1 > .main-title {
+    color: #fff4dc;
+    font-size: clamp(34px, 7vw, 84px);
+    padding-top: clamp(30px, 8vh, 80px);
+    text-shadow: 0 0 24px rgba(255, 170, 70, 0.55), 0 3px 12px rgba(0, 0, 0, 0.8);
+}
+body.festival.index-page .section1 > .box {
+    margin-top: 1rem;
+    background: rgba(255, 226, 170, 0.12);
+    border: 1px solid rgba(255, 200, 120, 0.40);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #fff4dc;
+    font-size: clamp(1.05rem, 2vw, 1.6rem);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+body.festival.index-page .section1 > .hero-actions { margin-top: clamp(28px, 7vh, 70px); text-align: center; }
+
+body.festival.index-page .hero-create-btn {
+    background: linear-gradient(180deg, #ffe39a, #ffb347);
+    color: #2a1409;
+    box-shadow: 0 0 22px rgba(255, 170, 70, 0.45);
+}
+body.festival.index-page .hero-create-btn:hover,
+body.festival.index-page .hero-create-btn:focus-visible {
+    background: linear-gradient(180deg, #fff0bf, #ffc15e);
+    color: #2a1409;
+}
+
+body.festival.index-page .section1 > .hero-footer {
+    max-width: 720px;
+    margin: 1.5rem auto 2.5rem;
+    padding: 0.9rem 1.2rem;
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    color: #fff4dc;
+    background: rgba(2, 3, 10, 0.45);          /* soft dark panel so the text stays readable over the ASCII art */
+    border-radius: 14px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+/* ---- section 2: How to create ---- */
+body.festival.index-page .section2 .howto-title {
+    color: #fff4dc;
+    text-shadow: 0 0 22px rgba(255, 170, 70, 0.45), 0 3px 10px rgba(0, 0, 0, 0.8);
+}
+body.festival.index-page .section2 .card {
+    background: linear-gradient(90deg, rgba(38, 20, 8, 0.88), rgba(140, 72, 24, 0.80));
+    border: 1px solid rgba(255, 190, 100, 0.35);
+    color: #fff4dc;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+body.festival.index-page .section2 .number { color: #ffd877; }
+body.festival.index-page .section2 .image-box img {
+    box-shadow: 0 0 30px rgba(255, 170, 70, 0.35), 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+body.festival.index-page .section2 .image-box p {
+    color: #fff4dc;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+body.festival.index-page .section2 .howto-brand .gradient {
+    background: linear-gradient(90deg, #ffe39a, #ffb347, #ff8a4a);   /* purple was too dark on the night sky */
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body.festival.index-page .hero-create-btn { text-decoration: none; }
+
+/* ---- section 4: contact (the temple and water scene is now the backdrop) ---- */
+body.festival.index-page .section4 .btn {
+    background: rgba(255, 226, 170, 0.16);
+    border: 1px solid rgba(255, 200, 120, 0.55);
+    color: #fff4dc;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+body.festival.index-page .section4 .btn:hover { background: rgba(255, 226, 170, 0.30); }
+
+/* ---- footer ---- */
+body.festival.index-page .footer1 {
+    background: rgba(2, 3, 10, 0.82) !important;
+    color: rgba(255, 240, 210, 0.85) !important;
+}
+body.festival.index-page .footer1 a,
+body.festival.index-page .footer1 p { color: rgba(255, 240, 210, 0.85) !important; }
+body.festival.index-page .footer1 .nav { border-color: rgba(255, 200, 120, 0.25) !important; }
+
+@media (max-width: 576px) {
+    body.festival.index-page .section1 > .hero-actions { margin-top: 28px; }
+    body.festival.index-page .section2 { padding: 30px 15px; }
+}

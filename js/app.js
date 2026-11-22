@@ -1294,17 +1294,23 @@ if (importJsonBtn && importJsonInput) {
     importBtn.disabled = true;
     importBtn.textContent = "Importing...";
 
-    try {
+        try {
         await savePortfolios(portfolios);
 
         renderProfilePage();
         overlay.remove();
         importJsonInput.value = "";
 
-        alert(
-        "Portfolio Item imported. Click EDIT to add your Reflection and Evidence (required)." +
-        (built.skippedLinks ? "\n" + built.skippedLinks + " invalid link(s) were skipped." : "")
-        );
+        // [ADDED] fireworks after a successful import (fired before alert, because alert freezes animation)
+        if (window.Festival && window.Festival.fireworks) { window.Festival.fireworks(4); }
+
+        // [CHANGED] wrapped in setTimeout so the fireworks start to show before the alert blocks the page
+        setTimeout(() => {
+            alert(
+            "Portfolio Item imported. Click EDIT to add your Reflection and Evidence (required)." +
+            (built.skippedLinks ? "\n" + built.skippedLinks + " invalid link(s) were skipped." : "")
+            );
+        }, 600);
     } catch (error) {
         console.error("Import Error:", error);
 

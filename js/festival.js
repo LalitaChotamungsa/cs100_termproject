@@ -3,6 +3,7 @@
  *  1) Night scene background drawn as ASCII art + twinkling stars + floating embers (every page that loads this file)
  *  2) Hanging garland and lanterns that swing when the mouse touches them (profile.html only)
  *  3) Temple-fair fireworks when the quiz result appears (quiz.html only)
+ *  4) Small krathongs drifting along the bottom of the page [ADDED]
  * Self-contained: it does not touch app.js. Remove the <script> and <link> tags to turn it all off.
  */
 (function () {
@@ -669,11 +670,136 @@
         return { watch: watch, launch: launch };
     })();
 
+    /* =====================================================================
+     * 4) FLOATING KRATHONGS  [ADDED - new module, independent of 1-3]
+     *    3-5 small krathongs drift slowly along the bottom of the page.
+     *    Drawn with canvas only. Sits behind the cards (z-index -1).
+     * ===================================================================== */
+    var Krathongs = (function () {
+        var KR_Z_INDEX = "-1";   /* [ADDED] use "1" if you want them to float OVER the cards */
+        var cv, ctx, W, CH, items = [], started = false, lastT = 0, resizeTimer = 0;
+        var DEPTHS = [0.5, 0.1, 0.9, 0.3, 0.7];   /* 0 = far/small/dim, 1 = near/big/bright */
+
+        function build() {
+            W = window.innerWidth;
+            CH = Math.round(clamp(window.innerHeight * 0.22, 120, 220));
+            cv.width = Math.round(W * dpr); cv.height = Math.round(CH * dpr);
+            cv.style.width = W + "px"; cv.style.height = CH + "px";
+            var n = W < 600 ? 3 : (W < 1000 ? 4 : 5);
+            var rnd = makeRng(2569), i, d;
+            items = [];
+            for (i = 0; i < n; i++) {
+                d = DEPTHS[i];
+                items.push({
+                    depth: d,
+                    x: (i + rnd() * 0.7) * (W / n),
+                    y: CH * (0.30 + 0.48 * d),
+                    s: 0.65 + 0.45 * d,               /* size */
+                    speed: 7 + 9 * d,                 /* px per second, drifting to the right */
+                    phase: rnd() * 6.28,
+                    freq: 0.6 + rnd() * 0.5,
+                    bob: 1.5 + 2.5 * d
+                });
+            }
+            items.sort(function (a, b) { return a.y - b.y; });   /* far ones are drawn first */
+            draw(lastT / 1000);
+        }
+
+        function drawOne(k, t) {
+            var bob = Math.sin(t * k.freq + k.phase) * k.bob;
+            var tilt = Math.sin(t * k.freq * 0.8 + k.phase + 1) * 0.035;
+            var R = 30 * k.s, x = k.x, y = k.y + bob, i, a;
+            var flick = reduceMotion ? 1 : 0.88 + 0.12 * Math.sin(t * 9 + k.phase * 3) + 0.05 * Math.sin(t * 23 + k.phase);
+
+            ctx.save();
+            ctx.globalAlpha = 0.55 + 0.45 * k.depth;
+
+            /* shimmering reflection on the water */
+            for (i = 0; i < 5; i++) {
+                a = (0.26 * (1 - i / 5) * flick).toFixed(3);
+                ctx.fillStyle = "rgba(255,185,90," + a + ")";
+                var rw = R * (0.9 - i * 0.12) * (1 + 0.12 * Math.sin(t * 1.3 + i + k.phase));
+                ctx.fillRect(x - rw / 2, y + R * 0.38 + i * R * 0.34, rw, 2);
+            }
+
+            /* warm candle glow */
+            ctx.globalCompositeOperation = "lighter";
+            var gy = y - R * 0.55;
+            var g = ctx.createRadialGradient(x, gy, 0, x, gy, R * 2.6);
+            g.addColorStop(0, "rgba(255,200,90," + (0.55 * flick).toFixed(3) + ")");
+            g.addColorStop(0.4, "rgba(255,140,40," + (0.20 * flick).toFixed(3) + ")");
+            g.addColorStop(1, "rgba(255,120,30,0)");
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(x, gy, R * 2.6, 0, 6.2832); ctx.fill();
+            ctx.globalCompositeOperation = "source-over";
+
+            /* body of the krathong */
+            ctx.translate(x, y); ctx.rotate(tilt);
+            ctx.fillStyle = "#3b4514";                                   /* banana-leaf base */
+            ctx.beginPath(); ctx.ellipse(0, R * 0.14, R, R * 0.30, 0, 0, 6.2832); ctx.fill();
+            ctx.fillStyle = "#4f5c1a";
+            ctx.beginPath(); ctx.ellipse(0, R * 0.08, R * 0.82, R * 0.20, 0, 0, 6.2832); ctx.fill();
+            for (i = -3; i <= 3; i++) {                                  /* lotus petals */
+                a = i * 0.40;
+                ctx.save();
+                ctx.translate(Math.sin(a) * R * 0.72, -Math.cos(a) * R * 0.10);
+                ctx.rotate(a);
+                ctx.fillStyle = i % 2 === 0 ? "#ff9fba" : "#ffe6ee";
+                ctx.beginPath(); ctx.ellipse(0, -R * 0.22, R * 0.15, R * 0.34, 0, 0, 6.2832); ctx.fill();
+                ctx.restore();
+            }
+            ctx.fillStyle = "#fff4d6";                                   /* candle */
+            ctx.fillRect(-R * 0.05, -R * 0.60, R * 0.10, R * 0.42);
+            ctx.fillStyle = "#ffcf5a";                                   /* flame */
+            ctx.beginPath(); ctx.ellipse(0, -R * 0.74, R * 0.075, R * 0.15 * flick, 0, 0, 6.2832); ctx.fill();
+            ctx.fillStyle = "#fffbe8";
+            ctx.beginPath(); ctx.ellipse(0, -R * 0.71, R * 0.035, R * 0.075 * flick, 0, 0, 6.2832); ctx.fill();
+            ctx.restore();
+        }
+
+        function draw(t) {
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, W, CH);
+            for (var i = 0; i < items.length; i++) { drawOne(items[i], t); }
+        }
+
+        function loop(ts) {
+            requestAnimationFrame(loop);
+            var dt = lastT ? Math.min((ts - lastT) / 1000, 0.05) : 0.016;
+            lastT = ts;
+            for (var i = 0; i < items.length; i++) {
+                items[i].x += items[i].speed * dt;
+                if (items[i].x > W + 60) { items[i].x = -60; }   /* wrap around */
+            }
+            draw(ts / 1000);
+        }
+
+        function start() {
+            if (started) { return; }
+            started = true;
+            cv = document.createElement("canvas");
+            cv.className = "festival-krathongs";
+            cv.setAttribute("aria-hidden", "true");
+            /* styled here (no festival.css change needed) */
+            cv.style.cssText = "position:fixed;left:0;bottom:0;pointer-events:none;z-index:" + KR_Z_INDEX + ";";
+            document.body.appendChild(cv);
+            ctx = cv.getContext("2d");
+            build();
+            window.addEventListener("resize", function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(build, 200);
+            });
+            if (!reduceMotion) { requestAnimationFrame(loop); }   /* reduced motion: one still frame only */
+        }
+        return { start: start };
+    })();
+
     window.Festival = { fireworks: function (n) { Fireworks.launch(n || 6); } };
 
     function boot() {
         document.body.classList.add("festival");
         Night.start();
+        Krathongs.start();   /* [ADDED] floating krathongs */
         if (document.body.classList.contains("profile-page")) { Hanging.start(); }
         Fireworks.watch();
     }

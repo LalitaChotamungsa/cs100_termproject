@@ -27,18 +27,9 @@ async function loadPortfolios() {
     }
 
     const serverPortfolios = await response.json();
-
-    if (serverPortfolios.length === 0) {
-        try {
-            const oldPortfolios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            if (oldPortfolios.length > 0) {
-                await savePortfolios(oldPortfolios);
-                return portfoliosCache;
-            }
-        } catch (error) {
-            console.error("Could not migrate old portfolios:", error);
-        }
-    }
+    portfoliosCache = serverPortfolios;
+    rememberSynced(serverPortfolios);
+    return portfoliosCache;
 
         portfoliosCache = serverPortfolios;
     rememberSynced(serverPortfolios);

@@ -711,7 +711,9 @@ body {
     margin: 20px auto;
     padding: 15px 20px;
     box-sizing: border-box;
-    background-color: #31487A;
+    background: transparent;
+    border: none;
+    box-shadow: none;
     border-radius: 20px;
 }
 .navbar-inner .logo-text {
@@ -741,6 +743,25 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
     white-space: nowrap;
+}
+.nav-item {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-item::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%;
 }
 @media (max-width: 576px) {
     .navbar-inner {

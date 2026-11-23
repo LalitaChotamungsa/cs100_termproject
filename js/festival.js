@@ -549,7 +549,7 @@
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(build, 200);
             });
-            window.addEventListener("load", function () { setTimeout(build, 250); });
+            
             if (!reduceMotion) {
                 window.addEventListener("pointermove", function (e) {
                     mouse.vx = e.pageX - (mouse.x < -900 ? e.pageX : mouse.x);
